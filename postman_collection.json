@@ -1,0 +1,712 @@
+{
+  "info": {
+    "name": "GNIP API",
+    "description": "Global News Intelligence Platform API",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://127.0.0.1:8000/api/v1" },
+    { "key": "token",    "value": "" }
+  ],
+  "item": [
+    {
+      "name": "🔐 Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/auth/register",
+            "header": [
+              { "key": "Accept",       "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Admin User\",\n  \"email\": \"admin@gnip.com\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  const res = pm.response.json();",
+                  "  pm.collectionVariables.set('token', res.data.token);",
+                  "  pm.test('Register successful', () => pm.expect(res.status).to.eq('ok'));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/auth/login",
+            "header": [
+              { "key": "Accept",       "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@gnip.com\",\n  \"password\": \"password123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const res = pm.response.json();",
+                  "  pm.collectionVariables.set('token', res.data.token);",
+                  "  pm.test('Login successful', () => pm.expect(res.status).to.eq('ok'));",
+                  "  pm.test('Token received', () => pm.expect(res.data.token).to.be.a('string'));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Me (Protected)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/auth/me",
+            "header": [
+              { "key": "Accept",         "value": "application/json" },
+              { "key": "Authorization",  "value": "Bearer {{token}}" }
+            ]
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Me returns user', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.status).to.eq('ok');",
+                  "  pm.expect(res.data.email).to.be.a('string');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Me - No Token (401)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/auth/me",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ]
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Returns 401', () => pm.expect(pm.response.code).to.eq(401));",
+                  "pm.test('Error message', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.status).to.eq('error');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Password",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/auth/password",
+            "header": [
+              { "key": "Accept",        "value": "application/json" },
+              { "key": "Content-Type",  "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"current_password\": \"password123\",\n  \"password\": \"newpassword123\",\n  \"password_confirmation\": \"newpassword123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/auth/logout",
+            "header": [
+              { "key": "Accept",        "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ]
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Logout successful', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.status).to.eq('ok');",
+                  "});",
+                  "pm.collectionVariables.set('token', '');"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "📊 Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/dashboard",
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', () => pm.expect(pm.response.code).to.eq(200));",
+                  "pm.test('Has articles stats', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.data.articles).to.be.an('object');",
+                  "  pm.expect(res.data.stories).to.be.an('object');",
+                  "  pm.expect(res.data.sources).to.be.an('object');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "📂 Categories",
+      "item": [
+        {
+          "name": "List Categories",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/categories",
+              "query": [{ "key": "lang", "value": "en" }]
+            },
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Returns categories', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.data).to.be.an('array');",
+                  "  pm.expect(res.data.length).to.be.above(0);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Categories (Arabic)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/categories?lang=ar",
+              "query": [{ "key": "lang", "value": "ar" }]
+            },
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Get Category",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/categories/1",
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Returns category', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.data.slug).to.be.a('string');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "📡 Sources",
+      "item": [
+        {
+          "name": "List Sources",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/sources",
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Returns sources', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.data).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Sources (Arabic only)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/sources?language=ar",
+              "query": [{ "key": "language", "value": "ar" }]
+            },
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "List Sources (Active only)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/sources?active=true",
+              "query": [{ "key": "active", "value": "true" }]
+            },
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Get Source",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/sources/4",
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Fetch Source Feed (Protected)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/sources/4/fetch",
+            "header": [
+              { "key": "Accept",        "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ]
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Fetch successful', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.status).to.eq('ok');",
+                  "  pm.expect(res.data.stored).to.be.a('number');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "📰 Articles",
+      "item": [
+        {
+          "name": "List Articles",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/articles?per_page=10",
+              "query": [{ "key": "per_page", "value": "10" }]
+            },
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Returns articles', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.data).to.be.an('array');",
+                  "  pm.expect(res.meta.total).to.be.above(0);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Articles (Arabic)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/articles?language=ar&per_page=10",
+              "query": [
+                { "key": "language", "value": "ar" },
+                { "key": "per_page", "value": "10" }
+              ]
+            },
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "List Articles (English)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/articles?language=en&per_page=10",
+              "query": [
+                { "key": "language", "value": "en" },
+                { "key": "per_page", "value": "10" }
+              ]
+            },
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Search Articles",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/articles?q=Ukraine",
+              "query": [{ "key": "q", "value": "Ukraine" }]
+            },
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Filter by Country (Egypt)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/articles?country=EG",
+              "query": [{ "key": "country", "value": "EG" }]
+            },
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Filter by Hours",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/articles?hours=24",
+              "query": [{ "key": "hours", "value": "24" }]
+            },
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Articles Stats",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/articles/stats/overview",
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Returns stats', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.data.total).to.be.a('number');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Article",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/articles/1",
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Analyze Article (Protected)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/articles/1/analyze",
+            "header": [
+              { "key": "Accept",        "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "📖 Stories",
+      "item": [
+        {
+          "name": "List Stories",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/stories?per_page=10",
+              "query": [{ "key": "per_page", "value": "10" }]
+            },
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Returns stories', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.data).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Stories (Arabic)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/stories?lang=ar",
+              "query": [{ "key": "lang", "value": "ar" }]
+            },
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "List Stories by Category",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/stories?category=politics",
+              "query": [{ "key": "category", "value": "politics" }]
+            },
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "List Stories by Evidence",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/stories?evidence_level=high",
+              "query": [{ "key": "evidence_level", "value": "high" }]
+            },
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Trending Stories",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/stories/trending/list?limit=5",
+              "query": [{ "key": "limit", "value": "5" }]
+            },
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Returns trending', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.data).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Story",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/stories/1",
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        }
+      ]
+    },
+    {
+      "name": "📋 Briefings",
+      "item": [
+        {
+          "name": "List Briefings",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/briefings",
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Returns briefings', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.data).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Briefings (Daily only)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/briefings?type=daily",
+              "query": [{ "key": "type", "value": "daily" }]
+            },
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Latest Daily Briefing",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/briefings/latest/daily",
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Returns daily briefing', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.data.type).to.eq('daily');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Latest Weekly Briefing",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/briefings/latest/weekly",
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Latest Monthly Briefing",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/briefings/latest/monthly",
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Latest Daily (Arabic)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/briefings/latest/daily?lang=ar",
+              "query": [{ "key": "lang", "value": "ar" }]
+            },
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Get Briefing by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/briefings/1",
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          }
+        },
+        {
+          "name": "Invalid Briefing Type (422)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/briefings/latest/invalid",
+            "header": [{ "key": "Accept", "value": "application/json" }]
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Returns 422', () => pm.expect(pm.response.code).to.eq(422));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "🔒 Rate Limiting Tests",
+      "item": [
+        {
+          "name": "Trigger Rate Limit (run 11 times)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/auth/login",
+            "header": [
+              { "key": "Accept",       "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"wrong@test.com\",\n  \"password\": \"wrongpass\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Rate limited after 10 tries', () => {",
+                  "  if (pm.response.code === 429) {",
+                  "    const res = pm.response.json();",
+                  "    pm.expect(res.status).to.eq('error');",
+                  "    pm.expect(res.retry_after).to.be.a('number');",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
