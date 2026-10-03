@@ -1,0 +1,157 @@
+services:
+
+  # ── Application ────────────────────────────────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: ${APP_BUILD_TARGET:-development}
+    container_name: gnip_app
+    restart: unless-stopped
+    working_dir: /var/www
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_KEY: base64:2fl+Ikyhg0AM8AZhS1I0KMq7UwAm7GiYJaBkBaXGq40=
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: gnip
+      DB_USERNAME: gnip
+      DB_PASSWORD: secret
+      CACHE_STORE: redis
+      QUEUE_CONNECTION: redis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      SESSION_DRIVER: redis
+    command: ["php-fpm"]
+    volumes:
+      - .:/var/www
+      - gnip_storage:/var/www/storage/app
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - gnip_network
+
+  # ── Nginx ──────────────────────────────────────────────────────
+  nginx:
+    image: nginx:alpine
+    container_name: gnip_nginx
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8080}:80"
+    volumes:
+      - .:/var/www
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - gnip_network
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ── MySQL ──────────────────────────────────────────────────────
+  db:
+    image: mysql:8.0
+    container_name: gnip_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: gnip
+      MYSQL_USER: gnip
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: rootsecret
+    volumes:
+      - gnip_db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "gnip", "-psecret"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - gnip_network
+
+  # ── Redis ──────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: gnip_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - gnip_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    networks:
+      - gnip_network
+
+  # ── Queue Worker ───────────────────────────────────────────────
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: ${APP_BUILD_TARGET:-production}
+    container_name: gnip_queue
+    restart: unless-stopped
+    working_dir: /var/www
+    env_file:
+      - .env.docker
+    command: ["php", "artisan", "queue:work", "--sleep=3", "--tries=3", "--timeout=90", "--max-time=3600"]
+    volumes:
+      - .:/var/www
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - gnip_network
+
+  # ── Scheduler ─────────────────────────────────────────────────
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: ${APP_BUILD_TARGET:-production}
+    container_name: gnip_scheduler
+    restart: unless-stopped
+    working_dir: /var/www
+    env_file:
+      - .env.docker
+    command:
+      - sh
+      - -c
+      - |
+        while true; do
+          php artisan schedule:run --no-interaction
+          sleep 60
+        done
+    volumes:
+      - .:/var/www
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - gnip_network
+
+volumes:
+  gnip_db_data:
+    driver: local
+  gnip_redis_data:
+    driver: local
+  gnip_storage:
+    driver: local
+
+networks:
+  gnip_network:
+    driver: bridge

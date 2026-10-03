@@ -1,0 +1,39 @@
+# Development overrides - loaded automatically by docker-compose
+# Enables hot-reload for Vite and exposes additional ports
+
+services:
+
+  app:
+    build:
+      target: development
+    env_file:
+      - .env.docker
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+    volumes:
+      - .:/var/www
+
+  # Vite dev server for hot module replacement
+  vite:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: gnip_vite
+    working_dir: /var/www
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/var/www
+    networks:
+      - gnip_network
+
+  db:
+    ports:
+      - "3307:3306"
+
+  redis:
+    ports:
+      - "6379:6379"
