@@ -43,3 +43,8 @@ Thumbs.db
 
 # Docker
 .env.docker
+
+# Temp
+artisan.txt
+*.zip
+gnip_tree.txt
