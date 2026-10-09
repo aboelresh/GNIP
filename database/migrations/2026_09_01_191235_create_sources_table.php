@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('sources', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('slug', 255)->unique();
             $table->string('website_url');
             $table->string('feed_url')->nullable();
             $table->string('feed_type')->default('rss');

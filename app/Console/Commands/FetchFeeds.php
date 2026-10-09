@@ -9,7 +9,8 @@ use Illuminate\Console\Command;
 
 class FetchFeeds extends Command
 {
-    protected $signature   = 'gnip:fetch-feeds {--source= : Fetch specific source by slug}';
+    protected $signature = 'gnip:fetch-feeds {--source= : Fetch specific source by slug}';
+
     protected $description = 'Fetch news from all active RSS sources';
 
     public function handle(FeedFetcher $fetcher, ArticleRepository $repository): int
@@ -26,14 +27,15 @@ class FetchFeeds extends Command
 
         if ($sources->isEmpty()) {
             $this->warn('No active sources found.');
+
             return self::FAILURE;
         }
 
         $this->info("Found {$sources->count()} source(s).");
 
-        $totalStored     = 0;
+        $totalStored = 0;
         $totalDuplicates = 0;
-        $totalFailed     = 0;
+        $totalFailed = 0;
 
         foreach ($sources as $source) {
             $this->line('');
@@ -42,17 +44,18 @@ class FetchFeeds extends Command
             $items = $fetcher->fetch($source);
 
             if (empty($items)) {
-                $this->warn("   No items fetched.");
+                $this->warn('   No items fetched.');
                 $source->markAsFetched();
+
                 continue;
             }
 
             $results = $repository->storeBatch($items, $source);
             $source->markAsFetched();
 
-            $totalStored     += $results['stored'];
+            $totalStored += $results['stored'];
             $totalDuplicates += $results['duplicates'];
-            $totalFailed     += $results['failed'];
+            $totalFailed += $results['failed'];
 
             $this->info("   Fetched: {$results['stored']} new | {$results['duplicates']} duplicates | {$results['failed']} failed");
         }

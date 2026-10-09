@@ -26,24 +26,24 @@ class SourcePreferenceController extends Controller
             ->get()
             ->map(function (Source $source) use ($preferences) {
                 return [
-                    'id'                => $source->id,
-                    'name'              => $source->name,
-                    'slug'              => $source->slug,
-                    'country_code'      => $source->country_code,
-                    'language'          => $source->language,
-                    'bias'              => $source->bias,
-                    'type'              => $source->type,
+                    'id' => $source->id,
+                    'name' => $source->name,
+                    'slug' => $source->slug,
+                    'country_code' => $source->country_code,
+                    'language' => $source->language,
+                    'bias' => $source->bias,
+                    'type' => $source->type,
                     'reliability_score' => $source->reliability_score,
-                    'website_url'       => $source->website_url,
-                    'is_enabled'        => $preferences->get($source->id, true),
+                    'website_url' => $source->website_url,
+                    'is_enabled' => $preferences->get($source->id, true),
                 ];
             });
 
         return response()->json([
             'status' => 'ok',
-            'data'   => [
-                'sources'       => $sources,
-                'total'         => $sources->count(),
+            'data' => [
+                'sources' => $sources,
+                'total' => $sources->count(),
                 'enabled_count' => $sources->where('is_enabled', true)->count(),
             ],
         ]);
@@ -54,7 +54,7 @@ class SourcePreferenceController extends Controller
      */
     public function toggle(Request $request, Source $source): JsonResponse
     {
-        
+
         $request->validate([
             'is_enabled' => ['required', 'boolean'],
         ]);
@@ -63,7 +63,7 @@ class SourcePreferenceController extends Controller
 
         $preference = UserSourcePreference::updateOrCreate(
             [
-                'user_id'   => $user->id,
+                'user_id' => $user->id,
                 'source_id' => $source->id,
             ],
             [
@@ -73,9 +73,9 @@ class SourcePreferenceController extends Controller
 
         return response()->json([
             'status' => 'ok',
-            'data'   => [
-                'source_id'  => $source->id,
-                'source'     => $source->name,
+            'data' => [
+                'source_id' => $source->id,
+                'source' => $source->name,
                 'is_enabled' => $preference->is_enabled,
             ],
         ]);
@@ -87,9 +87,9 @@ class SourcePreferenceController extends Controller
     public function bulkUpdate(Request $request): JsonResponse
     {
         $request->validate([
-            'sources'            => ['required', 'array'],
-            'sources.*.id'       => ['required', 'integer', 'exists:sources,id'],
-            'sources.*.enabled'  => ['required', 'boolean'],
+            'sources' => ['required', 'array'],
+            'sources.*.id' => ['required', 'integer', 'exists:sources,id'],
+            'sources.*.enabled' => ['required', 'boolean'],
         ]);
 
         $user = $request->user();
@@ -97,7 +97,7 @@ class SourcePreferenceController extends Controller
         foreach ($request->sources as $item) {
             UserSourcePreference::updateOrCreate(
                 [
-                    'user_id'   => $user->id,
+                    'user_id' => $user->id,
                     'source_id' => $item['id'],
                 ],
                 [
@@ -107,9 +107,9 @@ class SourcePreferenceController extends Controller
         }
 
         return response()->json([
-            'status'  => 'ok',
+            'status' => 'ok',
             'message' => 'Source preferences updated.',
-            'data'    => [
+            'data' => [
                 'updated' => count($request->sources),
             ],
         ]);
@@ -125,7 +125,7 @@ class SourcePreferenceController extends Controller
             ->delete();
 
         return response()->json([
-            'status'  => 'ok',
+            'status' => 'ok',
             'message' => 'All source preferences reset to default.',
         ]);
     }

@@ -19,9 +19,9 @@ class Entity extends Model
     ];
 
     protected $casts = [
-        'aliases'     => 'array',
+        'aliases' => 'array',
         'description' => 'array',
-        'metadata'    => 'array',
+        'metadata' => 'array',
     ];
 
     // ─── Relationships ────────────────────────────────────────────

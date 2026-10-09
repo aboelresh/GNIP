@@ -14,7 +14,8 @@ class FetchAllFeedsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public int $tries   = 1;
+    public int $tries = 1;
+
     public int $timeout = 300;
 
     public function handle(): void
@@ -27,6 +28,7 @@ class FetchAllFeedsJob implements ShouldQueue
 
         if ($sources->isEmpty()) {
             Log::warning('No active sources found.');
+
             return;
         }
 

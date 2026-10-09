@@ -22,14 +22,14 @@ return new class extends Migration
                 'briefing_generation',
                 'translation',
                 'video_summary',
-                'cross_source_analysis'
+                'cross_source_analysis',
             ]);
             $table->morphs('subject');
             $table->enum('status', [
                 'success',
                 'failed',
                 'timeout',
-                'limit_reached'
+                'limit_reached',
             ])->default('success');
             $table->integer('prompt_tokens')->default(0);
             $table->integer('completion_tokens')->default(0);

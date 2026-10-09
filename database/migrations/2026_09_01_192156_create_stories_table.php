@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('stories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
-            $table->string('slug')->unique();
+            $table->string('slug', 255)->unique();
             $table->json('title');
             $table->json('summary')->nullable();
             $table->json('what_happened')->nullable();

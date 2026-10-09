@@ -18,23 +18,23 @@ class CategoryController extends Controller
             return Category::active()
                 ->ordered()
                 ->get()
-                ->map(fn($cat) => [
-                    'id'          => $cat->id,
-                    'slug'        => $cat->slug,
-                    'name'        => $cat->getTranslatedName($locale),
+                ->map(fn ($cat) => [
+                    'id' => $cat->id,
+                    'slug' => $cat->slug,
+                    'name' => $cat->getTranslatedName($locale),
                     'description' => $cat->getTranslatedDescription($locale),
-                    'icon'        => $cat->icon,
-                    'color'       => $cat->color,
-                    'order'       => $cat->order,
+                    'icon' => $cat->icon,
+                    'color' => $cat->color,
+                    'order' => $cat->order,
                 ]);
         });
 
         return response()->json([
             'status' => 'ok',
-            'data'   => $categories,
-            'meta'   => [
+            'data' => $categories,
+            'meta' => [
                 'locale' => $locale,
-                'total'  => $categories->count(),
+                'total' => $categories->count(),
                 'cached' => true,
             ],
         ]);
@@ -46,14 +46,14 @@ class CategoryController extends Controller
 
         $data = Cache::remember("categories:{$category->id}:{$locale}", 3600, function () use ($category, $locale) {
             return [
-                'id'             => $category->id,
-                'slug'           => $category->slug,
-                'name'           => $category->getTranslatedName($locale),
-                'description'    => $category->getTranslatedDescription($locale),
-                'icon'           => $category->icon,
-                'color'          => $category->color,
+                'id' => $category->id,
+                'slug' => $category->slug,
+                'name' => $category->getTranslatedName($locale),
+                'description' => $category->getTranslatedDescription($locale),
+                'icon' => $category->icon,
+                'color' => $category->color,
                 'articles_count' => $category->articles()->count(),
-                'stories_count'  => $category->stories()->count(),
+                'stories_count' => $category->stories()->count(),
             ];
         });
 

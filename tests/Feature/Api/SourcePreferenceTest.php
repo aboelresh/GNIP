@@ -26,7 +26,7 @@ class SourcePreferenceTest extends TestCase
             ->assertJsonStructure([
                 'data' => [
                     'sources' => [
-                        '*' => ['id', 'name', 'slug', 'language', 'bias', 'is_enabled']
+                        '*' => ['id', 'name', 'slug', 'language', 'bias', 'is_enabled'],
                     ],
                     'total',
                     'enabled_count',
@@ -41,31 +41,31 @@ class SourcePreferenceTest extends TestCase
         $response->assertStatus(401);
     }
 
-   public function test_sources_default_to_enabled_when_no_preference_exists(): void
-{
-    $user    = User::factory()->create();
-    $source1 = Source::factory()->create(['is_active' => true]);
-    $source2 = Source::factory()->create(['is_active' => true]);
+    public function test_sources_default_to_enabled_when_no_preference_exists(): void
+    {
+        $user = User::factory()->create();
+        $source1 = Source::factory()->create(['is_active' => true]);
+        $source2 = Source::factory()->create(['is_active' => true]);
 
-    $response = $this->actingAs($user)
-        ->getJson('/api/v1/preferences/sources');
+        $response = $this->actingAs($user)
+            ->getJson('/api/v1/preferences/sources');
 
-    $response->assertStatus(200);
+        $response->assertStatus(200);
 
-    $sources = $response->json('data.sources');
+        $sources = $response->json('data.sources');
 
-    $this->assertNotEmpty($sources);
+        $this->assertNotEmpty($sources);
 
-    foreach ($sources as $source) {
-        $this->assertTrue($source['is_enabled'], "Source {$source['id']} should default to enabled");
+        foreach ($sources as $source) {
+            $this->assertTrue($source['is_enabled'], "Source {$source['id']} should default to enabled");
+        }
     }
-}
 
     // ─── Toggle ───────────────────────────────────────────────────
 
     public function test_user_can_disable_a_source(): void
     {
-        $user   = User::factory()->create();
+        $user = User::factory()->create();
         $source = Source::factory()->create(['is_active' => true]);
 
         $response = $this->actingAs($user)
@@ -76,28 +76,28 @@ class SourcePreferenceTest extends TestCase
         $response->assertStatus(200)
             ->assertJson([
                 'status' => 'ok',
-                'data'   => [
-                    'source_id'  => $source->id,
+                'data' => [
+                    'source_id' => $source->id,
                     'is_enabled' => false,
                 ],
             ]);
 
         $this->assertDatabaseHas('user_source_preferences', [
-            'user_id'    => $user->id,
-            'source_id'  => $source->id,
+            'user_id' => $user->id,
+            'source_id' => $source->id,
             'is_enabled' => false,
         ]);
     }
 
     public function test_user_can_enable_a_source(): void
     {
-        $user   = User::factory()->create();
+        $user = User::factory()->create();
         $source = Source::factory()->create(['is_active' => true]);
 
         // First disable it
         UserSourcePreference::create([
-            'user_id'    => $user->id,
-            'source_id'  => $source->id,
+            'user_id' => $user->id,
+            'source_id' => $source->id,
             'is_enabled' => false,
         ]);
 
@@ -110,15 +110,15 @@ class SourcePreferenceTest extends TestCase
             ->assertJsonPath('data.is_enabled', true);
 
         $this->assertDatabaseHas('user_source_preferences', [
-            'user_id'    => $user->id,
-            'source_id'  => $source->id,
+            'user_id' => $user->id,
+            'source_id' => $source->id,
             'is_enabled' => true,
         ]);
     }
 
     public function test_toggle_fails_without_is_enabled_field(): void
     {
-        $user   = User::factory()->create();
+        $user = User::factory()->create();
         $source = Source::factory()->create();
 
         $response = $this->actingAs($user)
@@ -154,7 +154,7 @@ class SourcePreferenceTest extends TestCase
 
     public function test_user_can_bulk_update_preferences(): void
     {
-        $user    = User::factory()->create();
+        $user = User::factory()->create();
         $source1 = Source::factory()->create();
         $source2 = Source::factory()->create();
         $source3 = Source::factory()->create();
@@ -171,17 +171,17 @@ class SourcePreferenceTest extends TestCase
         $response->assertStatus(200)
             ->assertJson([
                 'status' => 'ok',
-                'data'   => ['updated' => 3],
+                'data' => ['updated' => 3],
             ]);
 
         $this->assertDatabaseHas('user_source_preferences', [
-            'user_id'   => $user->id,
+            'user_id' => $user->id,
             'source_id' => $source1->id,
             'is_enabled' => false,
         ]);
 
         $this->assertDatabaseHas('user_source_preferences', [
-            'user_id'   => $user->id,
+            'user_id' => $user->id,
             'source_id' => $source3->id,
             'is_enabled' => true,
         ]);
@@ -205,12 +205,12 @@ class SourcePreferenceTest extends TestCase
 
     public function test_user_can_reset_preferences(): void
     {
-        $user   = User::factory()->create();
+        $user = User::factory()->create();
         $source = Source::factory()->create();
 
         UserSourcePreference::create([
-            'user_id'    => $user->id,
-            'source_id'  => $source->id,
+            'user_id' => $user->id,
+            'source_id' => $source->id,
             'is_enabled' => false,
         ]);
 
@@ -236,24 +236,24 @@ class SourcePreferenceTest extends TestCase
 
     public function test_articles_exclude_disabled_sources(): void
     {
-        $user    = User::factory()->create();
+        $user = User::factory()->create();
         $source1 = Source::factory()->create(['is_active' => true]);
         $source2 = Source::factory()->create(['is_active' => true]);
 
         \App\Models\Article::factory()->create([
-            'source_id'    => $source1->id,
+            'source_id' => $source1->id,
             'is_duplicate' => false,
         ]);
 
         \App\Models\Article::factory()->create([
-            'source_id'    => $source2->id,
+            'source_id' => $source2->id,
             'is_duplicate' => false,
         ]);
 
         // Disable source1
         UserSourcePreference::create([
-            'user_id'    => $user->id,
-            'source_id'  => $source1->id,
+            'user_id' => $user->id,
+            'source_id' => $source1->id,
             'is_enabled' => false,
         ]);
 
@@ -270,17 +270,17 @@ class SourcePreferenceTest extends TestCase
 
     public function test_articles_show_all_sources_without_preferences(): void
     {
-        $user    = User::factory()->create();
+        $user = User::factory()->create();
         $source1 = Source::factory()->create(['is_active' => true]);
         $source2 = Source::factory()->create(['is_active' => true]);
 
         \App\Models\Article::factory()->create([
-            'source_id'    => $source1->id,
+            'source_id' => $source1->id,
             'is_duplicate' => false,
         ]);
 
         \App\Models\Article::factory()->create([
-            'source_id'    => $source2->id,
+            'source_id' => $source2->id,
             'is_duplicate' => false,
         ]);
 

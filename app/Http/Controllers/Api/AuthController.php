@@ -14,24 +14,24 @@ class AuthController extends Controller
     public function register(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|email|unique:users,email',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        $user  = User::create([
-            'name'     => $validated['name'],
-            'email'    => $validated['email'],
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
 
         $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([
-            'status'  => 'ok',
+            'status' => 'ok',
             'message' => 'Registration successful.',
-            'data'    => [
-                'user'  => $this->formatUser($user),
+            'data' => [
+                'user' => $this->formatUser($user),
                 'token' => $token,
                 'token_type' => 'Bearer',
             ],
@@ -41,7 +41,7 @@ class AuthController extends Controller
     public function login(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'email'    => 'required|email',
+            'email' => 'required|email',
             'password' => 'required|string',
         ]);
 
@@ -59,11 +59,11 @@ class AuthController extends Controller
         $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([
-            'status'  => 'ok',
+            'status' => 'ok',
             'message' => 'Login successful.',
-            'data'    => [
-                'user'       => $this->formatUser($user),
-                'token'      => $token,
+            'data' => [
+                'user' => $this->formatUser($user),
+                'token' => $token,
                 'token_type' => 'Bearer',
             ],
         ]);
@@ -74,7 +74,7 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
-            'status'  => 'ok',
+            'status' => 'ok',
             'message' => 'Logged out successfully.',
         ]);
     }
@@ -83,7 +83,7 @@ class AuthController extends Controller
     {
         return response()->json([
             'status' => 'ok',
-            'data'   => $this->formatUser($request->user()),
+            'data' => $this->formatUser($request->user()),
         ]);
     }
 
@@ -91,7 +91,7 @@ class AuthController extends Controller
     {
         $validated = $request->validate([
             'current_password' => 'required|string',
-            'password'         => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
         if (! Hash::check($validated['current_password'], $request->user()->password)) {
@@ -110,18 +110,18 @@ class AuthController extends Controller
         $token = $request->user()->createToken('api-token')->plainTextToken;
 
         return response()->json([
-            'status'  => 'ok',
+            'status' => 'ok',
             'message' => 'Password updated successfully.',
-            'data'    => ['token' => $token],
+            'data' => ['token' => $token],
         ]);
     }
 
     private function formatUser(User $user): array
     {
         return [
-            'id'         => $user->id,
-            'name'       => $user->name,
-            'email'      => $user->email,
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
             'created_at' => $user->created_at,
         ];
     }

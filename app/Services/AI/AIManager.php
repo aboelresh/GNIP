@@ -19,10 +19,10 @@ class AIManager
         $order = config('gnip.ai.provider_order', ['ollama', 'openai']);
 
         $available = [
-    'mse_proxy' => MseProxyProvider::class,
-    'ollama'    => OllamaProvider::class,
-    'openai'    => OpenAIProvider::class,
-];
+            'mse_proxy' => MseProxyProvider::class,
+            'ollama' => OllamaProvider::class,
+            'openai' => OpenAIProvider::class,
+        ];
 
         foreach ($order as $name) {
             if (isset($available[$name])) {
@@ -36,6 +36,7 @@ class AIManager
         foreach ($this->providers as $name => $provider) {
             if (! $provider->isAvailable()) {
                 Log::warning("AIManager: Provider [{$name}] not available, trying next.");
+
                 continue;
             }
 
@@ -58,21 +59,21 @@ class AIManager
     public function completeAndLog(
         string $prompt,
         string $operation,
-        mixed  $subject = null,
-        array  $options = [],
+        mixed $subject = null,
+        array $options = [],
     ): AIResponse {
         $response = $this->complete($prompt, $options);
 
         $logData = [
-            'provider'         => $response->provider,
-            'model'            => $response->model,
-            'operation'        => $operation,
-            'status'           => $response->success ? 'success' : 'failed',
-            'prompt_tokens'    => $response->promptTokens,
-            'completion_tokens'=> $response->completionTokens,
-            'total_tokens'     => $response->totalTokens(),
+            'provider' => $response->provider,
+            'model' => $response->model,
+            'operation' => $operation,
+            'status' => $response->success ? 'success' : 'failed',
+            'prompt_tokens' => $response->promptTokens,
+            'completion_tokens' => $response->completionTokens,
+            'total_tokens' => $response->totalTokens(),
             'duration_seconds' => $response->durationSeconds,
-            'error_message'    => $response->error ?: null,
+            'error_message' => $response->error ?: null,
         ];
 
         if ($subject && method_exists($subject, 'aiLogs')) {
@@ -80,7 +81,7 @@ class AIManager
         } else {
             AiLog::create(array_merge($logData, [
                 'subject_type' => 'none',
-                'subject_id'   => 0,
+                'subject_id' => 0,
             ]));
         }
 
@@ -90,7 +91,7 @@ class AIManager
     public function getAvailableProviders(): array
     {
         return collect($this->providers)
-            ->filter(fn($p) => $p->isAvailable())
+            ->filter(fn ($p) => $p->isAvailable())
             ->keys()
             ->toArray();
     }

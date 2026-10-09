@@ -18,10 +18,10 @@ class Category extends Model
     ];
 
     protected $casts = [
-        'name'        => 'array',
+        'name' => 'array',
         'description' => 'array',
-        'is_active'   => 'boolean',
-        'order'       => 'integer',
+        'is_active' => 'boolean',
+        'order' => 'integer',
     ];
 
     // ─── Relationships ────────────────────────────────────────────

@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('entities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('slug', 255)->unique();
             $table->enum('type', [
                 'person',
                 'organization',
@@ -20,7 +20,7 @@ return new class extends Migration
                 'military',
                 'political_party',
                 'company',
-                'other'
+                'other',
             ])->default('other');
             $table->json('aliases')->nullable();
             $table->string('country_code', 5)->nullable();
@@ -43,7 +43,7 @@ return new class extends Migration
                 'source',
                 'actor',
                 'victim',
-                'location'
+                'location',
             ])->default('mentioned');
             $table->integer('relevance_score')->default(0);
             $table->timestamps();
@@ -62,7 +62,7 @@ return new class extends Migration
                 'source',
                 'actor',
                 'victim',
-                'location'
+                'location',
             ])->default('mentioned');
             $table->integer('relevance_score')->default(0);
             $table->timestamps();

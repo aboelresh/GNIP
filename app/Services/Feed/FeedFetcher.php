@@ -9,26 +9,29 @@ use Illuminate\Support\Facades\Log;
 class FeedFetcher
 {
     private int $timeout = 30;
+
     private int $maxItems = 50;
 
-        public function fetch(Source $source): array
+    public function fetch(Source $source): array
     {
         if (! $source->feed_url) {
             Log::warning("Source [{$source->slug}] has no feed URL.");
+
             return [];
         }
 
         try {
             $response = Http::timeout($this->timeout)
                 ->withHeaders([
-                    'User-Agent'     => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                    'Accept'          => 'application/rss+xml, application/xml, text/xml, */*',
+                    'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                    'Accept' => 'application/rss+xml, application/xml, text/xml, */*',
                     'Accept-Language' => 'en,ar,fr,it,es',
                 ])
                 ->get($source->feed_url);
 
             if (! $response->successful()) {
                 Log::error("Failed to fetch feed [{$source->slug}]: HTTP {$response->status()}");
+
                 return [];
             }
 
@@ -36,38 +39,43 @@ class FeedFetcher
                 ? $this->parseYoutube($response->body(), $source)
                 : $this->parse($response->body(), $source);
 
-            Log::info("Fetched {$source->slug}: " . count($items) . " items.");
+            Log::info("Fetched {$source->slug}: ".count($items).' items.');
 
             return $items;
 
         } catch (\Exception $e) {
-            Log::error("Exception fetching [{$source->slug}]: " . $e->getMessage());
+            Log::error("Exception fetching [{$source->slug}]: ".$e->getMessage());
+
             return [];
         }
     }
 
-        private function parseYoutube(string $xml, Source $source): array
+    private function parseYoutube(string $xml, Source $source): array
     {
         $items = [];
 
         try {
             $feed = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA | LIBXML_NOERROR);
-            if ($feed === false) return [];
+            if ($feed === false) {
+                return [];
+            }
 
-            $atom    = $feed->children('http://www.w3.org/2005/Atom');
+            $atom = $feed->children('http://www.w3.org/2005/Atom');
             $entries = $feed->children('http://www.w3.org/2005/Atom')->entry ?? $feed->entry ?? [];
 
             foreach ($entries as $entry) {
-                $media     = $entry->children('http://search.yahoo.com/mrss/');
-                $videoId   = (string) ($entry->children('http://www.youtube.com/xml/schemas/2015')->videoId ?? '');
-                $title     = (string) ($entry->title ?? '');
-                $link      = (string) ($entry->link['href'] ?? '');
+                $media = $entry->children('http://search.yahoo.com/mrss/');
+                $videoId = (string) ($entry->children('http://www.youtube.com/xml/schemas/2015')->videoId ?? '');
+                $title = (string) ($entry->title ?? '');
+                $link = (string) ($entry->link['href'] ?? '');
                 $published = (string) ($entry->published ?? '');
                 $thumbnail = (string) ($media->group->thumbnail['url'] ?? '');
-                $desc      = (string) ($media->group->description ?? '');
+                $desc = (string) ($media->group->description ?? '');
                 $channelName = (string) ($entry->author->name ?? $source->name);
 
-                if (! $title || ! $link) continue;
+                if (! $title || ! $link) {
+                    continue;
+                }
 
                 try {
                     $publishedAt = \Carbon\Carbon::parse($published)->toDateTimeString();
@@ -76,32 +84,33 @@ class FeedFetcher
                 }
 
                 $items[] = [
-                    'source_id'      => $source->id,
-                    'external_id'    => $videoId ?: mb_substr($link, 0, 255),
-                    'url'            => $link,
-                    'title'          => mb_substr($title, 0, 255),
+                    'source_id' => $source->id,
+                    'external_id' => $videoId ?: mb_substr($link, 0, 255),
+                    'url' => $link,
+                    'title' => mb_substr($title, 0, 255),
                     'original_title' => mb_substr($title, 0, 255),
-                    'description'    => mb_substr($desc, 0, 1000) ?: null,
-                    'author'         => mb_substr($channelName, 0, 255),
-                    'image_url'      => $thumbnail ?: null,
-                    'language'       => $source->language,
-                    'country_code'   => $source->country_code,
-                    'published_at'   => $publishedAt,
-                    'status'         => 'raw',
-                    'metadata'       => json_encode([
-                        'type'         => 'youtube',
-                        'video_id'     => $videoId,
+                    'description' => mb_substr($desc, 0, 1000) ?: null,
+                    'author' => mb_substr($channelName, 0, 255),
+                    'image_url' => $thumbnail ?: null,
+                    'language' => $source->language,
+                    'country_code' => $source->country_code,
+                    'published_at' => $publishedAt,
+                    'status' => 'raw',
+                    'metadata' => json_encode([
+                        'type' => 'youtube',
+                        'video_id' => $videoId,
                         'channel_name' => $channelName,
                     ]),
                 ];
             }
 
         } catch (\Exception $e) {
-            Log::error("YouTube parse error [{$source->slug}]: " . $e->getMessage());
+            Log::error("YouTube parse error [{$source->slug}]: ".$e->getMessage());
         }
 
         return $items;
     }
+
     private function parse(string $xml, Source $source): array
     {
         $items = [];
@@ -111,6 +120,7 @@ class FeedFetcher
 
             if ($feed === false) {
                 Log::error("Failed to parse XML for source [{$source->slug}]");
+
                 return [];
             }
 
@@ -124,7 +134,7 @@ class FeedFetcher
             }
 
         } catch (\Exception $e) {
-            Log::error("Parse error [{$source->slug}]: " . $e->getMessage());
+            Log::error("Parse error [{$source->slug}]: ".$e->getMessage());
         }
 
         return $items;
@@ -184,18 +194,18 @@ class FeedFetcher
         $externalId = $this->extractText($item, ['guid', 'id']);
 
         return [
-            'source_id'      => $source->id,
-            'external_id'    => $externalId ? mb_substr($externalId, 0, 255) : null,
-            'url'            => mb_substr($url, 0, 2048),
-            'title'          => mb_substr(trim($title), 0, 255),
+            'source_id' => $source->id,
+            'external_id' => $externalId ? mb_substr($externalId, 0, 255) : null,
+            'url' => mb_substr($url, 0, 2048),
+            'title' => mb_substr(trim($title), 0, 255),
             'original_title' => mb_substr(trim($title), 0, 255),
-            'description'    => $description,
-            'author'         => $author ? mb_substr($author, 0, 255) : null,
-            'image_url'      => $imageUrl ? mb_substr($imageUrl, 0, 2048) : null,
-            'language'       => $source->language,
-            'country_code'   => $source->country_code,
-            'published_at'   => $publishedAt,
-            'status'         => 'raw',
+            'description' => $description,
+            'author' => $author ? mb_substr($author, 0, 255) : null,
+            'image_url' => $imageUrl ? mb_substr($imageUrl, 0, 2048) : null,
+            'language' => $source->language,
+            'country_code' => $source->country_code,
+            'published_at' => $publishedAt,
+            'status' => 'raw',
         ];
     }
 

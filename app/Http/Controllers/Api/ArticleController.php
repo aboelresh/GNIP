@@ -17,17 +17,17 @@ class ArticleController extends Controller
         $query = Article::with(['source', 'category'])
             ->where('is_duplicate', false);
 
-         // Filter by user's source preferences if authenticated
+        // Filter by user's source preferences if authenticated
         if ($request->user() && $request->user()->hasSourcePreferences()) {
-                 $disabledSourceIds = $request->user()->sourcePreferences()
-              ->where('is_enabled', false)
-              ->pluck('source_id')
-              ->toArray();
-              
-          if (!empty($disabledSourceIds)) {
-             $query->whereNotIn('source_id', $disabledSourceIds);
-           }
-             
+            $disabledSourceIds = $request->user()->sourcePreferences()
+                ->where('is_enabled', false)
+                ->pluck('source_id')
+                ->toArray();
+
+            if (! empty($disabledSourceIds)) {
+                $query->whereNotIn('source_id', $disabledSourceIds);
+            }
+
         }
         if ($request->has('status')) {
             $query->where('status', $request->get('status'));
@@ -42,11 +42,11 @@ class ArticleController extends Controller
         }
 
         if ($request->has('source')) {
-            $query->whereHas('source', fn($q) => $q->where('slug', $request->get('source')));
+            $query->whereHas('source', fn ($q) => $q->where('slug', $request->get('source')));
         }
 
         if ($request->has('category')) {
-            $query->whereHas('category', fn($q) => $q->where('slug', $request->get('category')));
+            $query->whereHas('category', fn ($q) => $q->where('slug', $request->get('category')));
         }
 
         if ($request->has('hours')) {
@@ -55,23 +55,23 @@ class ArticleController extends Controller
 
         if ($request->has('q')) {
             $query->where(function ($q) use ($request) {
-                $q->where('title', 'like', '%' . $request->get('q') . '%')
-                    ->orWhere('description', 'like', '%' . $request->get('q') . '%');
+                $q->where('title', 'like', '%'.$request->get('q').'%')
+                    ->orWhere('description', 'like', '%'.$request->get('q').'%');
             });
         }
 
-        $locale   = $request->get('lang', 'en');
-        $perPage  = min((int) $request->get('per_page', 20), 100);
+        $locale = $request->get('lang', 'en');
+        $perPage = min((int) $request->get('per_page', 20), 100);
         $articles = $query->orderBy('published_at', 'desc')->paginate($perPage);
 
         return response()->json([
             'status' => 'ok',
-            'data'   => $articles->map(fn($article) => $this->formatArticle($article, $locale)),
-            'meta'   => [
-                'total'        => $articles->total(),
-                'per_page'     => $articles->perPage(),
+            'data' => $articles->map(fn ($article) => $this->formatArticle($article, $locale)),
+            'meta' => [
+                'total' => $articles->total(),
+                'per_page' => $articles->perPage(),
                 'current_page' => $articles->currentPage(),
-                'last_page'    => $articles->lastPage(),
+                'last_page' => $articles->lastPage(),
             ],
         ]);
     }
@@ -83,7 +83,7 @@ class ArticleController extends Controller
 
         return response()->json([
             'status' => 'ok',
-            'data'   => $this->formatArticle($article, $locale, detailed: true),
+            'data' => $this->formatArticle($article, $locale, detailed: true),
         ]);
     }
 
@@ -96,13 +96,13 @@ class ArticleController extends Controller
         }
 
         $analyzer = new ArticleAnalyzer($aiManager);
-        $result   = $analyzer->analyze($article);
+        $result = $analyzer->analyze($article);
         $article->refresh();
 
         return response()->json([
-            'status'  => $result ? 'ok' : 'error',
+            'status' => $result ? 'ok' : 'error',
             'message' => $result ? 'Article analyzed successfully.' : 'Analysis failed.',
-            'data'    => $result ? $this->formatArticle($article->load(['source', 'category']), 'en', detailed: true) : null,
+            'data' => $result ? $this->formatArticle($article->load(['source', 'category']), 'en', detailed: true) : null,
         ], $result ? 200 : 500);
     }
 
@@ -110,33 +110,33 @@ class ArticleController extends Controller
     {
         return response()->json([
             'status' => 'ok',
-            'data'   => $repository->getStats(),
+            'data' => $repository->getStats(),
         ]);
     }
 
     private function formatArticle(Article $article, string $locale = 'en', bool $detailed = false): array
     {
         $data = [
-            'id'               => $article->id,
-            'title'            => $article->title,
-            'url'              => $article->url,
-            'description'      => $article->description,
-            'image_url'        => $article->image_url,
-            'author'           => $article->author,
-            'language'         => $article->language,
-            'country_code'     => $article->country_code,
-            'published_at'     => $article->published_at,
-            'status'           => $article->status,
+            'id' => $article->id,
+            'title' => $article->title,
+            'url' => $article->url,
+            'description' => $article->description,
+            'image_url' => $article->image_url,
+            'author' => $article->author,
+            'language' => $article->language,
+            'country_code' => $article->country_code,
+            'published_at' => $article->published_at,
+            'status' => $article->status,
             'importance_score' => $article->importance_score,
-            'ai_summary'       => $article->getAiSummary($locale),
-            'source'           => $article->relationLoaded('source') ? [
-                'id'   => $article->source->id,
+            'ai_summary' => $article->getAiSummary($locale),
+            'source' => $article->relationLoaded('source') ? [
+                'id' => $article->source->id,
                 'name' => $article->source->name,
                 'slug' => $article->source->slug,
                 'bias' => $article->source->bias,
             ] : null,
             'category' => $article->relationLoaded('category') ? [
-                'id'   => $article->category?->id,
+                'id' => $article->category?->id,
                 'name' => $article->category?->getTranslatedName($locale),
                 'slug' => $article->category?->slug,
             ] : null,
@@ -144,13 +144,13 @@ class ArticleController extends Controller
 
         if ($detailed) {
             $data['ai_categories'] = $article->ai_categories;
-            $data['is_duplicate']  = $article->is_duplicate;
-            $data['duplicate_of']  = $article->duplicate_of;
-            $data['stories']       = $article->relationLoaded('stories')
+            $data['is_duplicate'] = $article->is_duplicate;
+            $data['duplicate_of'] = $article->duplicate_of;
+            $data['stories'] = $article->relationLoaded('stories')
                 ? $article->stories->pluck('slug')
                 : [];
             $data['entities'] = $article->relationLoaded('entities')
-                ? $article->entities->map(fn($e) => ['name' => $e->name, 'type' => $e->type])
+                ? $article->entities->map(fn ($e) => ['name' => $e->name, 'type' => $e->type])
                 : [];
         }
 

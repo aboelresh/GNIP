@@ -12,7 +12,7 @@ class OptionalSanctumAuth
         if ($request->bearerToken()) {
             $token = \Laravel\Sanctum\PersonalAccessToken::findToken($request->bearerToken());
             if ($token) {
-                $request->setUserResolver(fn() => $token->tokenable);
+                $request->setUserResolver(fn () => $token->tokenable);
             }
         }
 

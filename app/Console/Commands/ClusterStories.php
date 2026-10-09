@@ -8,7 +8,8 @@ use Illuminate\Console\Command;
 
 class ClusterStories extends Command
 {
-    protected $signature   = 'gnip:cluster-stories';
+    protected $signature = 'gnip:cluster-stories';
+
     protected $description = 'Cluster related articles into stories';
 
     public function handle(): int
@@ -16,8 +17,8 @@ class ClusterStories extends Command
         $this->info(' Starting Story Clustering...');
 
         $aiManager = new AIManager();
-        $service   = new StoryClusteringService($aiManager);
-        $results   = $service->run();
+        $service = new StoryClusteringService($aiManager);
+        $results = $service->run();
 
         $this->line('');
         $this->info('═══════════════════════════════');

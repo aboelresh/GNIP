@@ -26,10 +26,10 @@ class AuthorizationTest extends TestCase
 
     public function test_admin_can_access_fetch_source(): void
     {
-        $admin  = $this->createAdmin();
+        $admin = $this->createAdmin();
         $source = Source::factory()->create([
             'is_active' => true,
-            'feed_url'  => 'https://feeds.bbci.co.uk/news/world/rss.xml',
+            'feed_url' => 'https://feeds.bbci.co.uk/news/world/rss.xml',
         ]);
 
         $response = $this->actingAs($admin)
@@ -41,7 +41,7 @@ class AuthorizationTest extends TestCase
 
     public function test_regular_user_cannot_access_fetch_source(): void
     {
-        $user   = $this->createUser();
+        $user = $this->createUser();
         $source = Source::factory()->create(['is_active' => true]);
 
         $response = $this->actingAs($user)
@@ -49,7 +49,7 @@ class AuthorizationTest extends TestCase
 
         $response->assertStatus(403)
             ->assertJson([
-                'status'  => 'error',
+                'status' => 'error',
                 'message' => 'Forbidden. Admin access required.',
             ]);
     }
@@ -64,27 +64,27 @@ class AuthorizationTest extends TestCase
     }
 
     public function test_admin_can_analyze_article(): void
-{
-    $admin   = $this->createAdmin();
-    $source  = Source::factory()->create();
-    $article = Article::factory()->create([
-        'source_id' => $source->id,
-        'status'    => 'raw',
-    ]);
+    {
+        $admin = $this->createAdmin();
+        $source = Source::factory()->create();
+        $article = Article::factory()->create([
+            'source_id' => $source->id,
+            'status' => 'raw',
+        ]);
 
-    $response = $this->actingAs($admin)
-        ->postJson("/api/v1/articles/{$article->id}/analyze");
+        $response = $this->actingAs($admin)
+            ->postJson("/api/v1/articles/{$article->id}/analyze");
 
-    // Admin should reach the endpoint (200 or 503 if AI unavailable)
-    // The important thing is it's NOT 401 or 403
-    $this->assertNotEquals(401, $response->status());
-    $this->assertNotEquals(403, $response->status());
-}
+        // Admin should reach the endpoint (200 or 503 if AI unavailable)
+        // The important thing is it's NOT 401 or 403
+        $this->assertNotEquals(401, $response->status());
+        $this->assertNotEquals(403, $response->status());
+    }
 
     public function test_regular_user_cannot_analyze_article(): void
     {
-        $user    = $this->createUser();
-        $source  = Source::factory()->create();
+        $user = $this->createUser();
+        $source = Source::factory()->create();
         $article = Article::factory()->create([
             'source_id' => $source->id,
         ]);

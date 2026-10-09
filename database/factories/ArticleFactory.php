@@ -10,18 +10,18 @@ class ArticleFactory extends Factory
     public function definition(): array
     {
         return [
-            'source_id'        => Source::factory(),
-            'url'              => $this->faker->unique()->url(),
-            'title'            => $this->faker->sentence(),
-            'original_title'   => $this->faker->sentence(),
-            'description'      => $this->faker->paragraph(),
-            'language'         => $this->faker->randomElement(['en', 'ar', 'fr']),
-            'country_code'     => $this->faker->countryCode(),
+            'source_id' => Source::factory(),
+            'url' => $this->faker->unique()->url(),
+            'title' => $this->faker->sentence(),
+            'original_title' => $this->faker->sentence(),
+            'description' => $this->faker->paragraph(),
+            'language' => $this->faker->randomElement(['en', 'ar', 'fr']),
+            'country_code' => $this->faker->countryCode(),
             'published_at' => $this->faker->dateTimeBetween('-7 days', 'now'),
-            'status'           => 'raw',
-            'is_duplicate'     => false,
+            'status' => 'raw',
+            'is_duplicate' => false,
             'importance_score' => $this->faker->numberBetween(0, 100),
-            'content_hash'     => $this->faker->sha256(),
+            'content_hash' => $this->faker->sha256(),
         ];
     }
 

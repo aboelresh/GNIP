@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('external_id')->index();
             $table->enum('platform', [
                 'youtube',
-                'other'
+                'other',
             ])->default('youtube');
             $table->string('url', 2048);
             $table->string('embed_url', 2048)->nullable();

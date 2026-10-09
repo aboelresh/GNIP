@@ -39,27 +39,27 @@ class Story extends Model
     ];
 
     protected $casts = [
-        'title'                     => 'array',
-        'summary'                   => 'array',
-        'what_happened'             => 'array',
-        'what_changed'              => 'array',
-        'sources_agree'             => 'array',
-        'sources_disagree'          => 'array',
-        'unconfirmed_claims'        => 'array',
-        'countries'                 => 'array',
-        'languages'                 => 'array',
-        'tags'                      => 'array',
-        'metadata'                  => 'array',
-        'is_trending'               => 'boolean',
-        'is_published'              => 'boolean',
-        'evidence_score'            => 'integer',
-        'sources_count'             => 'integer',
-        'articles_count'            => 'integer',
+        'title' => 'array',
+        'summary' => 'array',
+        'what_happened' => 'array',
+        'what_changed' => 'array',
+        'sources_agree' => 'array',
+        'sources_disagree' => 'array',
+        'unconfirmed_claims' => 'array',
+        'countries' => 'array',
+        'languages' => 'array',
+        'tags' => 'array',
+        'metadata' => 'array',
+        'is_trending' => 'boolean',
+        'is_published' => 'boolean',
+        'evidence_score' => 'integer',
+        'sources_count' => 'integer',
+        'articles_count' => 'integer',
         'independent_sources_count' => 'integer',
-        'importance_score'          => 'integer',
-        'first_reported_at'         => 'datetime',
-        'last_updated_at'           => 'datetime',
-        'published_at'              => 'datetime',
+        'importance_score' => 'integer',
+        'first_reported_at' => 'datetime',
+        'last_updated_at' => 'datetime',
+        'published_at' => 'datetime',
     ];
 
     // ─── Relationships ────────────────────────────────────────────
@@ -177,7 +177,7 @@ class Story extends Model
             $this->evidence_score >= 75 => 'high',
             $this->evidence_score >= 45 => 'moderate',
             $this->evidence_score >= 20 => 'low',
-            default                     => 'unverified',
+            default => 'unverified',
         };
 
         $this->update(['evidence_level' => $level]);
@@ -191,7 +191,7 @@ class Story extends Model
 
         $this->update([
             'articles_count' => $articles->count(),
-            'sources_count'  => $sourceIds->count(),
+            'sources_count' => $sourceIds->count(),
         ]);
     }
 }

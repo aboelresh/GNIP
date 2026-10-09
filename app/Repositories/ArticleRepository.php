@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Article;
 use App\Models\Source;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ArticleRepository
@@ -33,15 +32,16 @@ class ArticleRepository
             if ($existingByHash) {
                 $data['is_duplicate'] = true;
                 $data['duplicate_of'] = $existingByHash->id;
-                $data['status']       = 'processed';
+                $data['status'] = 'processed';
             }
 
             return Article::create($data);
 
         } catch (\Exception $e) {
-            Log::error('ArticleRepository::store failed: ' . $e->getMessage(), [
+            Log::error('ArticleRepository::store failed: '.$e->getMessage(), [
                 'url' => $data['url'] ?? 'unknown',
             ]);
+
             return null;
         }
     }
@@ -49,9 +49,9 @@ class ArticleRepository
     public function storeBatch(array $items, Source $source): array
     {
         $results = [
-            'stored'     => 0,
+            'stored' => 0,
             'duplicates' => 0,
-            'failed'     => 0,
+            'failed' => 0,
         ];
 
         foreach ($items as $item) {
@@ -59,6 +59,7 @@ class ArticleRepository
 
             if ($article === null) {
                 $results['duplicates']++;
+
                 continue;
             }
 
@@ -102,7 +103,7 @@ class ArticleRepository
             ->where('language', $article->language)
             ->where('is_duplicate', false)
             ->where('published_at', '>=', now()->subHours($hours))
-            ->where(function ($query) use ($article) {
+            ->where(function ($query) {
                 $query->where('status', 'processed')
                     ->orWhere('status', 'raw');
             })
@@ -113,20 +114,21 @@ class ArticleRepository
     public function getStats(): array
     {
         return [
-            'total'      => Article::count(),
-            'raw'        => Article::where('status', 'raw')->count(),
+            'total' => Article::count(),
+            'raw' => Article::where('status', 'raw')->count(),
             'processing' => Article::where('status', 'processing')->count(),
-            'processed'  => Article::where('status', 'processed')->count(),
-            'failed'     => Article::where('status', 'failed')->count(),
+            'processed' => Article::where('status', 'processed')->count(),
+            'failed' => Article::where('status', 'failed')->count(),
             'duplicates' => Article::where('is_duplicate', true)->count(),
-            'today'      => Article::where('published_at', '>=', now()->startOfDay())->count(),
+            'today' => Article::where('published_at', '>=', now()->startOfDay())->count(),
         ];
     }
 
     private function generateHash(string $title, string $description = ''): string
     {
-        $content = strtolower(trim($title . ' ' . $description));
+        $content = strtolower(trim($title.' '.$description));
         $content = preg_replace('/\s+/', ' ', $content);
+
         return hash('sha256', $content);
     }
 }

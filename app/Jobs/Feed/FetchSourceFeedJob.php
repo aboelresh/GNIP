@@ -16,13 +16,16 @@ class FetchSourceFeedJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public int $tries   = 3;
+    public int $tries = 3;
+
     public int $timeout = 120;
+
     public int $backoff = 60;
 
     public function __construct(
         public readonly Source $source
-    ) {}
+    ) {
+    }
 
     public function handle(FeedFetcher $fetcher, ArticleRepository $repository): void
     {
@@ -30,11 +33,13 @@ class FetchSourceFeedJob implements ShouldQueue
 
         if (! $this->source->is_active) {
             Log::warning("Source [{$this->source->slug}] is inactive. Skipping.");
+
             return;
         }
 
         if (! $this->source->isDueForFetch()) {
             Log::info("Source [{$this->source->slug}] not due for fetch yet. Skipping.");
+
             return;
         }
 
@@ -44,6 +49,7 @@ class FetchSourceFeedJob implements ShouldQueue
         if (empty($items)) {
             Log::warning("No items fetched from [{$this->source->slug}]");
             $this->source->markAsFetched();
+
             return;
         }
 
@@ -54,10 +60,10 @@ class FetchSourceFeedJob implements ShouldQueue
         $this->source->markAsFetched();
 
         Log::info("FetchSourceFeedJob done: [{$this->source->slug}]", [
-            'fetched'    => count($items),
-            'stored'     => $results['stored'],
+            'fetched' => count($items),
+            'stored' => $results['stored'],
             'duplicates' => $results['duplicates'],
-            'failed'     => $results['failed'],
+            'failed' => $results['failed'],
         ]);
     }
 

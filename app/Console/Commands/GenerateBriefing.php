@@ -8,8 +8,9 @@ use Illuminate\Console\Command;
 
 class GenerateBriefing extends Command
 {
-    protected $signature   = 'gnip:generate-briefing
+    protected $signature = 'gnip:generate-briefing
                                 {type=daily : Briefing type (daily/weekly/monthly)}';
+
     protected $description = 'Generate a news briefing using AI';
 
     public function handle(): int
@@ -17,7 +18,8 @@ class GenerateBriefing extends Command
         $type = $this->argument('type');
 
         if (! in_array($type, ['daily', 'weekly', 'monthly'])) {
-            $this->error("Invalid type. Use: daily, weekly, monthly");
+            $this->error('Invalid type. Use: daily, weekly, monthly');
+
             return self::FAILURE;
         }
 
@@ -27,25 +29,27 @@ class GenerateBriefing extends Command
 
         if (empty($aiManager->getAvailableProviders())) {
             $this->error('No AI providers available.');
+
             return self::FAILURE;
         }
 
-        $service  = new BriefingGeneratorService($aiManager);
+        $service = new BriefingGeneratorService($aiManager);
 
-        $briefing = match($type) {
-            'daily'   => $service->generateDaily(),
-            'weekly'  => $service->generateWeekly(),
+        $briefing = match ($type) {
+            'daily' => $service->generateDaily(),
+            'weekly' => $service->generateWeekly(),
             'monthly' => $service->generateMonthly(),
         };
 
         if (! $briefing) {
             $this->error("Failed to generate {$type} briefing.");
+
             return self::FAILURE;
         }
 
         $this->line('');
         $this->info('═══════════════════════════════');
-        $this->info("✅ Briefing generated!");
+        $this->info('✅ Briefing generated!');
         $this->info("ID:      {$briefing->id}");
         $this->info("Type:    {$briefing->type}");
         $this->info("Stories: {$briefing->stories_count}");

@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Source extends Model
 {
-        use HasFactory;
+    use HasFactory;
+
     protected $fillable = [
         'name',
         'slug',
@@ -28,12 +30,12 @@ class Source extends Model
     ];
 
     protected $casts = [
-        'is_active'              => 'boolean',
-        'is_free'                => 'boolean',
-        'reliability_score'      => 'integer',
+        'is_active' => 'boolean',
+        'is_free' => 'boolean',
+        'reliability_score' => 'integer',
         'fetch_interval_minutes' => 'integer',
-        'last_fetched_at'        => 'datetime',
-        'metadata'               => 'array',
+        'last_fetched_at' => 'datetime',
+        'metadata' => 'array',
     ];
 
     // ─── Relationships ────────────────────────────────────────────
@@ -94,7 +96,7 @@ class Source extends Model
         return match (true) {
             $this->reliability_score >= 80 => 'high',
             $this->reliability_score >= 50 => 'medium',
-            default                        => 'low',
+            default => 'low',
         };
     }
 }

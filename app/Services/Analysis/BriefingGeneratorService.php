@@ -12,20 +12,21 @@ class BriefingGeneratorService
 {
     public function __construct(
         private readonly AIManager $ai
-    ) {}
+    ) {
+    }
 
-   public function generateDaily(): ?Briefing
-{
-    $start = now()->subDay()->startOfDay();
-    $end   = now()->subDay()->endOfDay();
+    public function generateDaily(): ?Briefing
+    {
+        $start = now()->subDay()->startOfDay();
+        $end = now()->subDay()->endOfDay();
 
-    return $this->generate('daily', $start, $end);
-}
+        return $this->generate('daily', $start, $end);
+    }
 
     public function generateWeekly(): ?Briefing
     {
         $start = now()->subWeek()->startOfWeek();
-        $end   = now()->subWeek()->endOfWeek();
+        $end = now()->subWeek()->endOfWeek();
 
         return $this->generate('weekly', $start, $end);
     }
@@ -33,7 +34,7 @@ class BriefingGeneratorService
     public function generateMonthly(): ?Briefing
     {
         $start = now()->subMonth()->startOfMonth();
-        $end   = now()->subMonth()->endOfMonth();
+        $end = now()->subMonth()->endOfMonth();
 
         return $this->generate('monthly', $start, $end);
     }
@@ -51,6 +52,7 @@ class BriefingGeneratorService
 
         if ($exists) {
             Log::info("Briefing already exists for {$type} {$start->toDateString()}");
+
             return $exists;
         }
 
@@ -74,19 +76,20 @@ class BriefingGeneratorService
 
         if ($stories->isEmpty()) {
             Log::warning("No stories found for {$type} briefing.");
+
             return null;
         }
 
         // ─── Create briefing record ────────────────────────────────
         $briefing = Briefing::create([
-            'type'         => $type,
-            'status'       => 'generating',
-            'title'        => $this->getDefaultTitle($type, $start),
+            'type' => $type,
+            'status' => 'generating',
+            'title' => $this->getDefaultTitle($type, $start),
             'period_start' => $start->toDateString(),
-            'period_end'   => $end->toDateString(),
-            'stories_count'=> $stories->count(),
-            'sources_count'=> $stories->sum('sources_count'),
-            'articles_count'=> $stories->sum('articles_count'),
+            'period_end' => $end->toDateString(),
+            'stories_count' => $stories->count(),
+            'sources_count' => $stories->sum('sources_count'),
+            'articles_count' => $stories->sum('articles_count'),
         ]);
 
         try {
@@ -97,7 +100,7 @@ class BriefingGeneratorService
             foreach ($stories as $index => $story) {
                 $section = $story->category?->slug ?? 'international';
                 $briefing->stories()->attach($story->id, [
-                    'order'   => $index + 1,
+                    'order' => $index + 1,
                     'section' => in_array($section, $this->allowedSections())
                         ? $section : 'other',
                     'summary' => json_encode([
@@ -109,48 +112,50 @@ class BriefingGeneratorService
 
             // ─── Update briefing ───────────────────────────────────
             $briefing->update([
-                'title'               => $content['titles'] ?? $this->getDefaultTitle($type, $start),
-                'introduction'        => $content['introductions'] ?? null,
-                'sections'            => $content['sections'] ?? null,
-                'conclusion'          => $content['conclusions'] ?? null,
-                'top_stories'         => $content['top_stories'] ?? null,
-                'key_developments'    => $content['key_developments'] ?? null,
+                'title' => $content['titles'] ?? $this->getDefaultTitle($type, $start),
+                'introduction' => $content['introductions'] ?? null,
+                'sections' => $content['sections'] ?? null,
+                'conclusion' => $content['conclusions'] ?? null,
+                'top_stories' => $content['top_stories'] ?? null,
+                'key_developments' => $content['key_developments'] ?? null,
                 'languages_available' => ['en', 'ar'],
-                'status'              => 'published',
-                'generated_at'        => now(),
-                'published_at'        => now(),
+                'status' => 'published',
+                'generated_at' => now(),
+                'published_at' => now(),
             ]);
 
             Log::info("Briefing [{$type}] generated successfully. ID: {$briefing->id}");
+
             return $briefing;
 
         } catch (\Exception $e) {
-            Log::error("BriefingGeneratorService failed: " . $e->getMessage());
+            Log::error('BriefingGeneratorService failed: '.$e->getMessage());
             $briefing->markAsFailed();
+
             return null;
         }
     }
 
     private function generateContent($stories, string $type): array
     {
-        $typeLabel = match($type) {
-            'daily'   => 'daily news briefing',
-            'weekly'  => 'weekly news summary',
+        $typeLabel = match ($type) {
+            'daily' => 'daily news briefing',
+            'weekly' => 'weekly news summary',
             'monthly' => 'monthly news review',
-            default   => 'news briefing',
+            default => 'news briefing',
         };
 
         $storiesSummary = $stories->take(5)->map(function ($story, $index) {
-            return ($index + 1) . '. ' . $story->getTranslatedTitle('en')
-                . ' [' . ($story->category?->getTranslatedName('en') ?? 'General') . ']'
-                . ' - Sources: ' . $story->sources_count
-                . ' - Evidence: ' . $story->evidence_level;
+            return ($index + 1).'. '.$story->getTranslatedTitle('en')
+                .' ['.($story->category?->getTranslatedName('en') ?? 'General').']'
+                .' - Sources: '.$story->sources_count
+                .' - Evidence: '.$story->evidence_level;
         })->implode("\n");
 
-        $prompt = 'You are a professional news editor creating a ' . $typeLabel . '. Based on these top stories, create a structured briefing.
+        $prompt = 'You are a professional news editor creating a '.$typeLabel.'. Based on these top stories, create a structured briefing.
 
 TOP STORIES:
-' . $storiesSummary . '
+'.$storiesSummary.'
 
 Respond with ONLY a valid JSON object:
 {
@@ -186,6 +191,7 @@ Rules:
 
         try {
             $data = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
+
             return is_array($data) ? $data : $this->getFallbackContent($type, $stories);
         } catch (\JsonException $e) {
             return $this->getFallbackContent($type, $stories);
@@ -195,28 +201,29 @@ Rules:
     private function getFallbackContent(string $type, $stories): array
     {
         $topTitles = $stories->take(3)
-            ->map(fn($s) => $s->getTranslatedTitle('en'))
+            ->map(fn ($s) => $s->getTranslatedTitle('en'))
             ->implode(', ');
 
         return [
-            'titles'          => $this->getDefaultTitle($type, now()),
-            'introductions'   => ['en' => "Here are the top stories for this {$type} briefing."],
-            'top_stories'     => ['en' => $topTitles],
-            'key_developments'=> ['en' => 'See individual stories for details.'],
-            'sections'        => ['en' => 'Multiple categories covered.'],
-            'conclusions'     => ['en' => 'Stay informed with GNIP.'],
+            'titles' => $this->getDefaultTitle($type, now()),
+            'introductions' => ['en' => "Here are the top stories for this {$type} briefing."],
+            'top_stories' => ['en' => $topTitles],
+            'key_developments' => ['en' => 'See individual stories for details.'],
+            'sections' => ['en' => 'Multiple categories covered.'],
+            'conclusions' => ['en' => 'Stay informed with GNIP.'],
         ];
     }
 
     private function getDefaultTitle(string $type, Carbon $date): array
     {
         $dateStr = $date->format('M d, Y');
-        return match($type) {
-            'daily'   => [
+
+        return match ($type) {
+            'daily' => [
                 'en' => "Daily Briefing — {$dateStr}",
                 'ar' => "التقرير اليومي — {$dateStr}",
             ],
-            'weekly'  => [
+            'weekly' => [
                 'en' => "Weekly Briefing — Week of {$dateStr}",
                 'ar' => "التقرير الأسبوعي — أسبوع {$dateStr}",
             ],
@@ -224,7 +231,7 @@ Rules:
                 'en' => "Monthly Briefing — {$date->format('F Y')}",
                 'ar' => "التقرير الشهري — {$date->format('F Y')}",
             ],
-            default   => ['en' => "News Briefing", 'ar' => "نشرة إخبارية"],
+            default => ['en' => 'News Briefing', 'ar' => 'نشرة إخبارية'],
         };
     }
 

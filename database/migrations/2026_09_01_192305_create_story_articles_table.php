@@ -20,7 +20,7 @@ return new class extends Migration
                 'critical',
                 'analytical',
                 'official',
-                'opposition'
+                'opposition',
             ])->default('neutral');
             $table->json('key_points')->nullable();
             $table->timestamps();

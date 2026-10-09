@@ -19,8 +19,7 @@ class HomeController extends Controller
             ->orderBy('last_updated_at', 'desc');
 
         if ($request->filled('category')) {
-            $query->whereHas('category', fn($q) =>
-                $q->where('slug', $request->category)
+            $query->whereHas('category', fn ($q) => $q->where('slug', $request->category)
             );
         }
 
@@ -36,18 +35,19 @@ class HomeController extends Controller
                     $story->articles->pluck('source')->filter()->unique('id')->values()
                 );
                 $story->unsetRelation('articles');
+
                 return $story;
             });
 
-        $categories = Category::orderBy('name->en')->get()->map(fn($c) => [
-            'id'   => $c->id,
+        $categories = Category::orderBy('name->en')->get()->map(fn ($c) => [
+            'id' => $c->id,
             'slug' => $c->slug,
             'name' => $c->name,
         ]);
 
         return Inertia::render('Home', [
-            'stories'      => $stories,
-            'categories'   => $categories,
+            'stories' => $stories,
+            'categories' => $categories,
             'sourcesCount' => Source::where('is_active', true)->count(),
         ]);
     }

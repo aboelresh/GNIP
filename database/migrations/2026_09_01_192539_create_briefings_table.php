@@ -14,13 +14,13 @@ return new class extends Migration
                 'daily',
                 'weekly',
                 'monthly',
-                'yearly'
+                'yearly',
             ]);
             $table->enum('status', [
                 'pending',
                 'generating',
                 'published',
-                'failed'
+                'failed',
             ])->default('pending');
             $table->json('title');
             $table->json('introduction')->nullable();
@@ -59,7 +59,7 @@ return new class extends Migration
                 'sports',
                 'environment',
                 'international',
-                'other'
+                'other',
             ])->default('other');
             $table->json('summary')->nullable();
             $table->timestamps();

@@ -24,12 +24,12 @@ class AiLog extends Model
     ];
 
     protected $casts = [
-        'prompt_tokens'     => 'integer',
+        'prompt_tokens' => 'integer',
         'completion_tokens' => 'integer',
-        'total_tokens'      => 'integer',
-        'duration_seconds'  => 'float',
-        'cost'              => 'float',
-        'metadata'          => 'array',
+        'total_tokens' => 'integer',
+        'duration_seconds' => 'float',
+        'cost' => 'float',
+        'metadata' => 'array',
     ];
 
     // ─── Relationships ────────────────────────────────────────────
@@ -70,7 +70,7 @@ class AiLog extends Model
 
     public function getDurationFormatted(): string
     {
-        return round($this->duration_seconds, 2) . 's';
+        return round($this->duration_seconds, 2).'s';
     }
 
     // ─── Static Helpers ───────────────────────────────────────────
@@ -84,11 +84,11 @@ class AiLog extends Model
         }
 
         return [
-            'total_requests'    => $query->count(),
-            'total_tokens'      => $query->sum('total_tokens'),
-            'total_cost'        => $query->sum('cost'),
-            'avg_duration'      => round($query->avg('duration_seconds'), 2),
-            'failed_requests'   => static::failed()->when($provider, fn($q) => $q->byProvider($provider))->count(),
+            'total_requests' => $query->count(),
+            'total_tokens' => $query->sum('total_tokens'),
+            'total_cost' => $query->sum('cost'),
+            'avg_duration' => round($query->avg('duration_seconds'), 2),
+            'failed_requests' => static::failed()->when($provider, fn ($q) => $q->byProvider($provider))->count(),
         ];
     }
 }

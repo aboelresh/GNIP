@@ -33,12 +33,12 @@ class Video extends Model
     ];
 
     protected $casts = [
-        'ai_summary'       => 'array',
-        'metadata'         => 'array',
-        'is_processed'     => 'boolean',
+        'ai_summary' => 'array',
+        'metadata' => 'array',
+        'is_processed' => 'boolean',
         'importance_score' => 'integer',
         'duration_seconds' => 'integer',
-        'published_at'     => 'datetime',
+        'published_at' => 'datetime',
     ];
 
     // ─── Relationships ────────────────────────────────────────────
@@ -105,7 +105,7 @@ class Video extends Model
             return 'Unknown';
         }
 
-        $hours   = intdiv($this->duration_seconds, 3600);
+        $hours = intdiv($this->duration_seconds, 3600);
         $minutes = intdiv($this->duration_seconds % 3600, 60);
         $seconds = $this->duration_seconds % 60;
 

@@ -21,24 +21,24 @@ class DashboardController extends Controller
 
             return [
                 'articles' => [
-                    'total'      => Article::count(),
-                    'today'      => Article::where('published_at', '>=', now()->startOfDay())->count(),
-                    'raw'        => Article::where('status', 'raw')->count(),
-                    'processed'  => Article::where('status', 'processed')->count(),
+                    'total' => Article::count(),
+                    'today' => Article::where('published_at', '>=', now()->startOfDay())->count(),
+                    'raw' => Article::where('status', 'raw')->count(),
+                    'processed' => Article::where('status', 'processed')->count(),
                     'duplicates' => Article::where('is_duplicate', true)->count(),
                 ],
                 'sources' => [
-                    'total'  => Source::count(),
+                    'total' => Source::count(),
                     'active' => Source::where('is_active', true)->count(),
                 ],
                 'stories' => [
-                    'total'     => Story::count(),
+                    'total' => Story::count(),
                     'published' => Story::where('is_published', true)->count(),
-                    'trending'  => Story::where('is_trending', true)->count(),
+                    'trending' => Story::where('is_trending', true)->count(),
                 ],
                 'categories' => Category::where('is_active', true)->count(),
-                'briefings'  => Briefing::where('status', 'published')->count(),
-                'ai'         => [
+                'briefings' => Briefing::where('status', 'published')->count(),
+                'ai' => [
                     'available_providers' => $aiManager->getAvailableProviders(),
                 ],
                 'languages' => Article::groupBy('language')
@@ -49,8 +49,8 @@ class DashboardController extends Controller
 
         return response()->json([
             'status' => 'ok',
-            'data'   => $data,
-            'meta'   => ['cached' => true, 'ttl_seconds' => 300],
+            'data' => $data,
+            'meta' => ['cached' => true, 'ttl_seconds' => 300],
         ]);
     }
 }

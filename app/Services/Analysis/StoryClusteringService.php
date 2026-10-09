@@ -13,15 +13,17 @@ use Illuminate\Support\Str;
 class StoryClusteringService
 {
     private float $similarityThreshold;
-    private int   $timeWindowHours;
-    private int   $minSourcesForStory;
+
+    private int $timeWindowHours;
+
+    private int $minSourcesForStory;
 
     public function __construct(
         private readonly AIManager $ai
     ) {
         $this->similarityThreshold = config('gnip.clustering.similarity_threshold', 0.7);
-        $this->timeWindowHours     = config('gnip.clustering.time_window_hours', 48);
-        $this->minSourcesForStory  = config('gnip.clustering.min_sources_for_story', 2);
+        $this->timeWindowHours = config('gnip.clustering.time_window_hours', 48);
+        $this->minSourcesForStory = config('gnip.clustering.min_sources_for_story', 2);
     }
 
     public function run(): array
@@ -39,17 +41,20 @@ class StoryClusteringService
 
         if ($articles->isEmpty()) {
             Log::info('No articles to cluster.');
+
             return ['clusters' => 0, 'stories_created' => 0, 'articles_clustered' => 0];
         }
 
         Log::info("Clustering {$articles->count()} articles.");
 
-        $clusters        = $this->buildClusters($articles);
-        $storiesCreated  = 0;
+        $clusters = $this->buildClusters($articles);
+        $storiesCreated = 0;
         $articlesClustered = 0;
 
         foreach ($clusters as $cluster) {
-            if ($cluster->count() < 1) continue;
+            if ($cluster->count() < 1) {
+                continue;
+            }
 
             $story = $this->createOrUpdateStory($cluster);
             if ($story) {
@@ -61,25 +66,29 @@ class StoryClusteringService
         Log::info("Clustering done. Stories: {$storiesCreated}, Articles: {$articlesClustered}");
 
         return [
-            'clusters'          => count($clusters),
-            'stories_created'   => $storiesCreated,
-            'articles_clustered'=> $articlesClustered,
+            'clusters' => count($clusters),
+            'stories_created' => $storiesCreated,
+            'articles_clustered' => $articlesClustered,
         ];
     }
 
     private function buildClusters(Collection $articles): array
     {
-        $clusters   = [];
-        $assigned   = [];
+        $clusters = [];
+        $assigned = [];
 
         foreach ($articles as $article) {
-            if (in_array($article->id, $assigned)) continue;
+            if (in_array($article->id, $assigned)) {
+                continue;
+            }
 
             $cluster = collect([$article]);
             $assigned[] = $article->id;
 
             foreach ($articles as $other) {
-                if (in_array($other->id, $assigned)) continue;
+                if (in_array($other->id, $assigned)) {
+                    continue;
+                }
                 if ($this->areSimilar($article, $other)) {
                     $cluster->push($other);
                     $assigned[] = $other->id;
@@ -97,7 +106,9 @@ class StoryClusteringService
         // ─── Time window check ─────────────────────────────────────
         if ($a->published_at && $b->published_at) {
             $hoursDiff = abs($a->published_at->diffInHours($b->published_at));
-            if ($hoursDiff > $this->timeWindowHours) return false;
+            if ($hoursDiff > $this->timeWindowHours) {
+                return false;
+            }
         }
 
         // ─── Title similarity ──────────────────────────────────────
@@ -106,7 +117,9 @@ class StoryClusteringService
             $this->normalizeText($b->title)
         );
 
-        if ($similarity >= $this->similarityThreshold) return true;
+        if ($similarity >= $this->similarityThreshold) {
+            return true;
+        }
 
         // ─── Category match + partial similarity ───────────────────
         if ($a->category_id && $a->category_id === $b->category_id && $similarity >= 0.4) {
@@ -124,23 +137,27 @@ class StoryClusteringService
 
         // Remove common stop words
         $stopWords = ['the', 'a', 'an', 'in', 'on', 'at', 'to', 'for', 'of', 'and', 'or', 'is', 'are', 'was', 'were'];
-        $words     = explode(' ', $text);
-        $words     = array_filter($words, fn($w) => ! in_array($w, $stopWords) && strlen($w) > 2);
+        $words = explode(' ', $text);
+        $words = array_filter($words, fn ($w) => ! in_array($w, $stopWords) && strlen($w) > 2);
 
         return implode(' ', $words);
     }
 
     private function calculateSimilarity(string $a, string $b): float
     {
-        if (empty($a) || empty($b)) return 0.0;
+        if (empty($a) || empty($b)) {
+            return 0.0;
+        }
 
         $wordsA = array_unique(explode(' ', $a));
         $wordsB = array_unique(explode(' ', $b));
 
         $intersection = array_intersect($wordsA, $wordsB);
-        $union        = array_unique(array_merge($wordsA, $wordsB));
+        $union = array_unique(array_merge($wordsA, $wordsB));
 
-        if (empty($union)) return 0.0;
+        if (empty($union)) {
+            return 0.0;
+        }
 
         return count($intersection) / count($union);
     }
@@ -149,9 +166,9 @@ class StoryClusteringService
     {
         try {
             $primaryArticle = $cluster->sortByDesc('importance_score')->first();
-            $sourceIds      = $cluster->pluck('source_id')->unique();
-            $languages      = $cluster->pluck('language')->unique()->values()->toArray();
-            $countries      = $cluster->pluck('country_code')->filter()->unique()->values()->toArray();
+            $sourceIds = $cluster->pluck('source_id')->unique();
+            $languages = $cluster->pluck('language')->unique()->values()->toArray();
+            $countries = $cluster->pluck('country_code')->filter()->unique()->values()->toArray();
 
             // ─── Generate story title & summary via AI ─────────────
             $aiData = $this->generateStoryContent($cluster);
@@ -159,42 +176,43 @@ class StoryClusteringService
             $slug = $this->generateUniqueSlug($aiData['title_en'] ?? $primaryArticle->title);
 
             $story = Story::create([
-                'category_id'               => $primaryArticle->category_id,
-                'slug'                      => $slug,
-                'title'                     => $aiData['titles'] ?? ['en' => $primaryArticle->title],
-                'summary'                   => $aiData['summaries'] ?? ['en' => $primaryArticle->description ?? ''],
-                'what_happened'             => $aiData['what_happened'] ?? null,
-                'sources_agree'             => $aiData['sources_agree'] ?? null,
-                'sources_disagree'          => $aiData['sources_disagree'] ?? null,
-                'evidence_level'            => $this->calculateEvidenceLevel($sourceIds->count()),
-                'evidence_score'            => $this->calculateEvidenceScore($sourceIds->count(), $cluster->count()),
-                'sources_count'             => $sourceIds->count(),
-                'articles_count'            => $cluster->count(),
+                'category_id' => $primaryArticle->category_id,
+                'slug' => $slug,
+                'title' => $aiData['titles'] ?? ['en' => $primaryArticle->title],
+                'summary' => $aiData['summaries'] ?? ['en' => $primaryArticle->description ?? ''],
+                'what_happened' => $aiData['what_happened'] ?? null,
+                'sources_agree' => $aiData['sources_agree'] ?? null,
+                'sources_disagree' => $aiData['sources_disagree'] ?? null,
+                'evidence_level' => $this->calculateEvidenceLevel($sourceIds->count()),
+                'evidence_score' => $this->calculateEvidenceScore($sourceIds->count(), $cluster->count()),
+                'sources_count' => $sourceIds->count(),
+                'articles_count' => $cluster->count(),
                 'independent_sources_count' => $sourceIds->count(),
-                'importance_score'          => (int) $cluster->avg('importance_score'),
-                'is_trending'               => $cluster->count() >= 3,
-                'is_published'              => true,
-                'countries'                 => $countries,
-                'languages'                 => $languages,
-                'image_url'                 => $primaryArticle->image_url,
-                'first_reported_at'         => $cluster->min('published_at'),
-                'last_updated_at'           => now(),
-                'published_at'              => now(),
+                'importance_score' => (int) $cluster->avg('importance_score'),
+                'is_trending' => $cluster->count() >= 3,
+                'is_published' => true,
+                'countries' => $countries,
+                'languages' => $languages,
+                'image_url' => $primaryArticle->image_url,
+                'first_reported_at' => $cluster->min('published_at'),
+                'last_updated_at' => now(),
+                'published_at' => now(),
             ]);
 
             // ─── Attach articles ───────────────────────────────────
             foreach ($cluster as $article) {
                 $story->articles()->attach($article->id, [
-                    'is_primary'      => $article->id === $primaryArticle->id,
+                    'is_primary' => $article->id === $primaryArticle->id,
                     'relevance_score' => $article->importance_score,
-                    'perspective'     => 'neutral',
+                    'perspective' => 'neutral',
                 ]);
             }
 
             return $story;
 
         } catch (\Exception $e) {
-            Log::error('StoryClusteringService::createOrUpdateStory failed: ' . $e->getMessage());
+            Log::error('StoryClusteringService::createOrUpdateStory failed: '.$e->getMessage());
+
             return null;
         }
     }
@@ -205,7 +223,7 @@ class StoryClusteringService
 
         $prompt = 'You are a news editor. Based on these related news article titles, create a unified story.
 
-Titles: ' . $titles . '
+Titles: '.$titles.'
 
 Respond with ONLY a JSON object:
 {"title_en":"Unified English title","titles":{"en":"English","ar":"Arabic","fr":"French","it":"Italian","es":"Spanish"},"summaries":{"en":"2 sentence summary","ar":"Arabic summary","fr":"French summary","it":"Italian summary","es":"Spanish summary"},"what_happened":{"en":"What happened in 3 sentences"},"sources_agree":{"en":"Key facts all sources agree on"},"sources_disagree":{"en":"Points where sources differ or null"}}';
@@ -237,13 +255,14 @@ Respond with ONLY a JSON object:
             $sourcesCount >= 4 => 'high',
             $sourcesCount >= 2 => 'moderate',
             $sourcesCount >= 1 => 'low',
-            default            => 'unverified',
+            default => 'unverified',
         };
     }
 
     private function calculateEvidenceScore(int $sourcesCount, int $articlesCount): int
     {
         $score = ($sourcesCount * 15) + ($articlesCount * 5);
+
         return min($score, 100);
     }
 
@@ -251,12 +270,12 @@ Respond with ONLY a JSON object:
     {
         $base = Str::slug($title);
         $slug = $base;
-        $i    = 1;
+        $i = 1;
 
         while (Story::where('slug', $slug)->exists()) {
-            $slug = $base . '-' . $i++;
+            $slug = $base.'-'.$i++;
         }
 
-        return $slug ?: 'story-' . uniqid();
+        return $slug ?: 'story-'.uniqid();
     }
 }

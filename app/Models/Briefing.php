@@ -29,21 +29,21 @@ class Briefing extends Model
     ];
 
     protected $casts = [
-        'title'               => 'array',
-        'introduction'        => 'array',
-        'sections'            => 'array',
-        'conclusion'          => 'array',
-        'top_stories'         => 'array',
-        'key_developments'    => 'array',
+        'title' => 'array',
+        'introduction' => 'array',
+        'sections' => 'array',
+        'conclusion' => 'array',
+        'top_stories' => 'array',
+        'key_developments' => 'array',
         'languages_available' => 'array',
-        'metadata'            => 'array',
-        'period_start'        => 'date',
-        'period_end'          => 'date',
-        'stories_count'       => 'integer',
-        'articles_count'      => 'integer',
-        'sources_count'       => 'integer',
-        'generated_at'        => 'datetime',
-        'published_at'        => 'datetime',
+        'metadata' => 'array',
+        'period_start' => 'date',
+        'period_end' => 'date',
+        'stories_count' => 'integer',
+        'articles_count' => 'integer',
+        'sources_count' => 'integer',
+        'generated_at' => 'datetime',
+        'published_at' => 'datetime',
     ];
 
     // ─── Relationships ────────────────────────────────────────────
@@ -113,7 +113,7 @@ class Briefing extends Model
     public function markAsPublished(): void
     {
         $this->update([
-            'status'       => 'published',
+            'status' => 'published',
             'published_at' => now(),
         ]);
     }

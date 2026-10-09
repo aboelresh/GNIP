@@ -8,13 +8,15 @@ use Illuminate\Support\Facades\Log;
 class OllamaProvider implements AIProvider
 {
     private string $baseUrl;
+
     private string $model;
-    private int    $timeout;
+
+    private int $timeout;
 
     public function __construct()
     {
         $this->baseUrl = config('gnip.ai.ollama.base_url', 'http://localhost:11434');
-        $this->model   = config('gnip.ai.ollama.model', 'llama3.2');
+        $this->model = config('gnip.ai.ollama.model', 'llama3.2');
         $this->timeout = config('gnip.ai.ollama.timeout', 120);
     }
 
@@ -25,7 +27,7 @@ class OllamaProvider implements AIProvider
         try {
             $response = Http::timeout($this->timeout)
                 ->post("{$this->baseUrl}/api/generate", [
-                    'model'  => $this->model,
+                    'model' => $this->model,
                     'prompt' => $prompt,
                     'stream' => false,
                     'options' => [
@@ -44,7 +46,7 @@ class OllamaProvider implements AIProvider
                 );
             }
 
-            $data    = $response->json();
+            $data = $response->json();
             $content = trim($data['response'] ?? '');
 
             if (empty($content)) {
@@ -56,16 +58,16 @@ class OllamaProvider implements AIProvider
             }
 
             return AIResponse::success(
-                content:          $content,
-                provider:         $this->getName(),
-                model:            $this->model,
-                promptTokens:     $data['prompt_eval_count'] ?? 0,
+                content: $content,
+                provider: $this->getName(),
+                model: $this->model,
+                promptTokens: $data['prompt_eval_count'] ?? 0,
                 completionTokens: $data['eval_count'] ?? 0,
-                durationSeconds:  round($duration, 2),
+                durationSeconds: round($duration, 2),
             );
 
         } catch (\Exception $e) {
-            Log::error('OllamaProvider error: ' . $e->getMessage());
+            Log::error('OllamaProvider error: '.$e->getMessage());
 
             return AIResponse::failure(
                 $e->getMessage(),
@@ -79,6 +81,7 @@ class OllamaProvider implements AIProvider
     {
         try {
             $response = Http::timeout(5)->get("{$this->baseUrl}/api/tags");
+
             return $response->successful();
         } catch (\Exception $e) {
             return false;

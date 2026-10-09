@@ -1,0 +1,18 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 4
+    paths:
+        - app
+    excludePaths:
+        - app/Http/Middleware/HandleInertiaRequests.php
+        - app/Http/Controllers/Web
+    treatPhpDocTypesAsCertain: false
+    ignoreErrors:
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany::notDuplicate\(\)#'
+        - '#Property App\\Services\\Analysis\\StoryClusteringService::\$minSourcesForStory is never read#'
+        - '#Method App\\Services\\Feed\\FeedFetcher::extractDate\(\) never returns null#'
+        - '#Using nullsafe property access#'
+        - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::#'

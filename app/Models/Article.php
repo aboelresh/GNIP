@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 class Article extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'source_id',
         'category_id',
@@ -36,12 +38,12 @@ class Article extends Model
     ];
 
     protected $casts = [
-        'published_at'     => 'datetime',
-        'is_duplicate'     => 'boolean',
+        'published_at' => 'datetime',
+        'is_duplicate' => 'boolean',
         'importance_score' => 'integer',
-        'ai_summary'       => 'array',
-        'ai_categories'    => 'array',
-        'metadata'         => 'array',
+        'ai_summary' => 'array',
+        'ai_categories' => 'array',
+        'metadata' => 'array',
     ];
 
     // ─── Relationships ────────────────────────────────────────────
@@ -134,7 +136,7 @@ class Article extends Model
         $this->update([
             'is_duplicate' => true,
             'duplicate_of' => $originalId,
-            'status'       => 'processed',
+            'status' => 'processed',
         ]);
     }
 
@@ -145,7 +147,8 @@ class Article extends Model
 
     public function generateContentHash(): string
     {
-        $content = strtolower(trim($this->title . ' ' . $this->description));
+        $content = strtolower(trim($this->title.' '.$this->description));
+
         return hash('sha256', $content);
     }
 }

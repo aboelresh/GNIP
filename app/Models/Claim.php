@@ -20,11 +20,11 @@ class Claim extends Model
     ];
 
     protected $casts = [
-        'text'                => 'array',
-        'metadata'            => 'array',
-        'confirmed_by_count'  => 'integer',
-        'disputed_by_count'   => 'integer',
-        'mentioned_by_count'  => 'integer',
+        'text' => 'array',
+        'metadata' => 'array',
+        'confirmed_by_count' => 'integer',
+        'disputed_by_count' => 'integer',
+        'mentioned_by_count' => 'integer',
     ];
 
     // ─── Relationships ────────────────────────────────────────────
@@ -82,7 +82,7 @@ class Claim extends Model
     {
         $this->update([
             'confirmed_by_count' => $this->claimSources()->where('stance', 'confirms')->count(),
-            'disputed_by_count'  => $this->claimSources()->where('stance', 'disputes')->count(),
+            'disputed_by_count' => $this->claimSources()->where('stance', 'disputes')->count(),
             'mentioned_by_count' => $this->claimSources()->where('stance', 'mentions')->count(),
         ]);
     }
@@ -91,9 +91,9 @@ class Claim extends Model
     {
         $status = match (true) {
             $this->confirmed_by_count >= 3 && $this->disputed_by_count === 0 => 'confirmed',
-            $this->disputed_by_count >= 2                                     => 'disputed',
-            $this->confirmed_by_count >= 1 && $this->disputed_by_count >= 1  => 'partially_confirmed',
-            default                                                           => 'unverified',
+            $this->disputed_by_count >= 2 => 'disputed',
+            $this->confirmed_by_count >= 1 && $this->disputed_by_count >= 1 => 'partially_confirmed',
+            default => 'unverified',
         };
 
         $this->update(['status' => $status]);

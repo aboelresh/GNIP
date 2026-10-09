@@ -11,11 +11,11 @@ class CategorySeeder extends Seeder
     {
         $categories = [
             [
-                'slug'  => 'politics',
-                'icon'  => '🏛️',
+                'slug' => 'politics',
+                'icon' => '🏛️',
                 'color' => '#3B82F6',
                 'order' => 1,
-                'name'  => [
+                'name' => [
                     'en' => 'Politics',
                     'ar' => 'سياسة',
                     'fr' => 'Politique',
@@ -31,11 +31,11 @@ class CategorySeeder extends Seeder
                 ],
             ],
             [
-                'slug'  => 'conflicts',
-                'icon'  => '⚔️',
+                'slug' => 'conflicts',
+                'icon' => '⚔️',
                 'color' => '#EF4444',
                 'order' => 2,
-                'name'  => [
+                'name' => [
                     'en' => 'Military & Conflicts',
                     'ar' => 'عسكري وصراعات',
                     'fr' => 'Militaire et conflits',
@@ -51,11 +51,11 @@ class CategorySeeder extends Seeder
                 ],
             ],
             [
-                'slug'  => 'economy',
-                'icon'  => '📈',
+                'slug' => 'economy',
+                'icon' => '📈',
                 'color' => '#10B981',
                 'order' => 3,
-                'name'  => [
+                'name' => [
                     'en' => 'Economy',
                     'ar' => 'اقتصاد',
                     'fr' => 'Économie',
@@ -71,11 +71,11 @@ class CategorySeeder extends Seeder
                 ],
             ],
             [
-                'slug'  => 'technology',
-                'icon'  => '💻',
+                'slug' => 'technology',
+                'icon' => '💻',
                 'color' => '#8B5CF6',
                 'order' => 4,
-                'name'  => [
+                'name' => [
                     'en' => 'Technology',
                     'ar' => 'تكنولوجيا',
                     'fr' => 'Technologie',
@@ -91,11 +91,11 @@ class CategorySeeder extends Seeder
                 ],
             ],
             [
-                'slug'  => 'science',
-                'icon'  => '🔬',
+                'slug' => 'science',
+                'icon' => '🔬',
                 'color' => '#06B6D4',
                 'order' => 5,
-                'name'  => [
+                'name' => [
                     'en' => 'Science',
                     'ar' => 'علوم',
                     'fr' => 'Science',
@@ -111,11 +111,11 @@ class CategorySeeder extends Seeder
                 ],
             ],
             [
-                'slug'  => 'health',
-                'icon'  => '🏥',
+                'slug' => 'health',
+                'icon' => '🏥',
                 'color' => '#F59E0B',
                 'order' => 6,
-                'name'  => [
+                'name' => [
                     'en' => 'Health',
                     'ar' => 'صحة',
                     'fr' => 'Santé',
@@ -131,11 +131,11 @@ class CategorySeeder extends Seeder
                 ],
             ],
             [
-                'slug'  => 'environment',
-                'icon'  => '🌍',
+                'slug' => 'environment',
+                'icon' => '🌍',
                 'color' => '#84CC16',
                 'order' => 7,
-                'name'  => [
+                'name' => [
                     'en' => 'Environment',
                     'ar' => 'بيئة',
                     'fr' => 'Environnement',
@@ -151,11 +151,11 @@ class CategorySeeder extends Seeder
                 ],
             ],
             [
-                'slug'  => 'sports',
-                'icon'  => '⚽',
+                'slug' => 'sports',
+                'icon' => '⚽',
                 'color' => '#F97316',
                 'order' => 8,
-                'name'  => [
+                'name' => [
                     'en' => 'Sports',
                     'ar' => 'رياضة',
                     'fr' => 'Sports',
@@ -171,11 +171,11 @@ class CategorySeeder extends Seeder
                 ],
             ],
             [
-                'slug'  => 'business',
-                'icon'  => '💼',
+                'slug' => 'business',
+                'icon' => '💼',
                 'color' => '#6B7280',
                 'order' => 9,
-                'name'  => [
+                'name' => [
                     'en' => 'Business',
                     'ar' => 'أعمال',
                     'fr' => 'Affaires',
@@ -191,11 +191,11 @@ class CategorySeeder extends Seeder
                 ],
             ],
             [
-                'slug'  => 'international',
-                'icon'  => '🌐',
+                'slug' => 'international',
+                'icon' => '🌐',
                 'color' => '#EC4899',
                 'order' => 10,
-                'name'  => [
+                'name' => [
                     'en' => 'International Affairs',
                     'ar' => 'شؤون دولية',
                     'fr' => 'Affaires internationales',
@@ -219,6 +219,6 @@ class CategorySeeder extends Seeder
             );
         }
 
-        $this->command->info('✅ Categories seeded: ' . count($categories));
+        $this->command->info('✅ Categories seeded: '.count($categories));
     }
 }

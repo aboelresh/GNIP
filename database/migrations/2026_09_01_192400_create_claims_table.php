@@ -17,13 +17,13 @@ return new class extends Migration
                 'confirmed',
                 'disputed',
                 'debunked',
-                'partially_confirmed'
+                'partially_confirmed',
             ])->default('unverified');
             $table->enum('importance', [
                 'critical',
                 'high',
                 'medium',
-                'low'
+                'low',
             ])->default('medium');
             $table->integer('confirmed_by_count')->default(0);
             $table->integer('disputed_by_count')->default(0);
@@ -43,7 +43,7 @@ return new class extends Migration
                 'confirms',
                 'disputes',
                 'mentions',
-                'partially_confirms'
+                'partially_confirms',
             ])->default('mentions');
             $table->text('excerpt')->nullable();
             $table->timestamps();
