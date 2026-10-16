@@ -48,3 +48,4 @@ Thumbs.db
 artisan.txt
 *.zip
 gnip_tree.txt
+.phpunit.result.cache
