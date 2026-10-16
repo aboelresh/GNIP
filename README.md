@@ -39,7 +39,7 @@ The AI layer is provider-agnostic. The system tries providers in order and falls
 
 ## Tech Stack
 
-- PHP 8.2 / Laravel 11
+- PHP 8.2 / Laravel 12
 - MySQL 8
 - Ollama (local AI inference)
 - Laravel Queues + Scheduler
