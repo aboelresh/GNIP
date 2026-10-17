@@ -25,21 +25,26 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 
+# Create non-root user
+RUN addgroup -g 1000 gnip && adduser -u 1000 -G gnip -s /bin/sh -D gnip
+
 # ─── Development Stage ────────────────────────────────────────────────────────
 FROM base AS development
 
 RUN apk add --no-cache nodejs npm
 
-COPY composer.json composer.lock ./
+COPY --chown=gnip:gnip composer.json composer.lock ./
 RUN composer install --no-interaction --prefer-dist --no-scripts
-COPY package*.json ./
+
+COPY --chown=gnip:gnip package*.json ./
 RUN npm install
 
-COPY . .
+COPY --chown=gnip:gnip . .
 
-RUN chown -R www-data:www-data /var/www \
-    && chmod -R 755 /var/www/storage \
+RUN chmod -R 755 /var/www/storage \
     && chmod -R 755 /var/www/bootstrap/cache
+
+USER gnip
 
 EXPOSE 9000 5173
 
@@ -48,7 +53,7 @@ CMD ["php-fpm"]
 # ─── Production Stage ─────────────────────────────────────────────────────────
 FROM base AS production
 
-COPY composer.json composer.lock ./
+COPY --chown=gnip:gnip composer.json composer.lock ./
 RUN composer install \
     --no-dev \
     --no-interaction \
@@ -56,7 +61,7 @@ RUN composer install \
     --no-scripts \
     --prefer-dist
 
-COPY . .
+COPY --chown=gnip:gnip . .
 
 RUN composer dump-autoload --optimize
 
@@ -66,9 +71,10 @@ RUN apk add --no-cache nodejs npm \
     && apk del nodejs npm \
     && rm -rf node_modules
 
-RUN chown -R www-data:www-data /var/www \
-    && chmod -R 755 /var/www/storage \
+RUN chmod -R 755 /var/www/storage \
     && chmod -R 755 /var/www/bootstrap/cache
+
+USER gnip
 
 EXPOSE 9000
 
