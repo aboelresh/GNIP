@@ -17,6 +17,7 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
+        "knuckleswtf/scribe": "^5.11",
         "larastan/larastan": "^3.12",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "1.13",

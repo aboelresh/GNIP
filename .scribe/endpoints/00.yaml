@@ -1,0 +1,1249 @@
+name: Endpoints
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/auth/register
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: vmqeopfuudtdsufvyvddq
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'Must be a valid email address.'
+        required: true
+        example: kunde.eloisa@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'Must be at least 8 characters.'
+        required: true
+        example: '4[*UyPJ"}6'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: vmqeopfuudtdsufvyvddq
+      email: kunde.eloisa@example.com
+      password: '4[*UyPJ"}6'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/auth/login
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      email:
+        custom: []
+        name: email
+        description: 'Must be a valid email address.'
+        required: true
+        example: qkunze@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: ''
+        required: true
+        example: 'O[2UZ5ij-e/dl4m{o,'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      email: qkunze@example.com
+      password: 'O[2UZ5ij-e/dl4m{o,'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/health
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"status":"ok","timestamp":"2026-10-16T20:59:24+00:00","version":"1.0.0","checks":{"database":"ok","cache":"ok","queue":{"status":"ok","pending":0,"failed":0},"ai":{"status":"unavailable","providers":[]},"stats":{"articles":1360,"stories":147,"sources":33}}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: 'http://localhost:8080'
+          access-control-expose-headers: 'X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/categories
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"status":"ok","data":[{"id":1,"slug":"politics","name":"Politics","description":"Political news and government affairs","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6","order":1},{"id":2,"slug":"conflicts","name":"Military & Conflicts","description":"Military operations and armed conflicts","icon":"\u2694\ufe0f","color":"#EF4444","order":2},{"id":3,"slug":"economy","name":"Economy","description":"Economic news and financial markets","icon":"\ud83d\udcc8","color":"#10B981","order":3},{"id":4,"slug":"technology","name":"Technology","description":"Technology and innovation news","icon":"\ud83d\udcbb","color":"#8B5CF6","order":4},{"id":5,"slug":"science","name":"Science","description":"Scientific discoveries and research","icon":"\ud83d\udd2c","color":"#06B6D4","order":5},{"id":6,"slug":"health","name":"Health","description":"Health and medical news","icon":"\ud83c\udfe5","color":"#F59E0B","order":6},{"id":7,"slug":"environment","name":"Environment","description":"Environmental and climate news","icon":"\ud83c\udf0d","color":"#84CC16","order":7},{"id":8,"slug":"sports","name":"Sports","description":"Sports news and results","icon":"\u26bd","color":"#F97316","order":8},{"id":9,"slug":"business","name":"Business","description":"Business and corporate news","icon":"\ud83d\udcbc","color":"#6B7280","order":9},{"id":10,"slug":"international","name":"International Affairs","description":"International relations and diplomacy","icon":"\ud83c\udf10","color":"#EC4899","order":10}],"meta":{"locale":"en","total":10,"cached":true}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '30'
+          x-ratelimit-remaining: '29'
+          access-control-allow-origin: 'http://localhost:8080'
+          access-control-expose-headers: 'X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/categories/{category_id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      category_id:
+        custom: []
+        name: category_id
+        description: 'The ID of the category.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      category_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"status":"ok","data":{"id":1,"slug":"politics","name":"Politics","description":"Political news and government affairs","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6","articles_count":126,"stories_count":123}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '30'
+          x-ratelimit-remaining: '28'
+          access-control-allow-origin: 'http://localhost:8080'
+          access-control-expose-headers: 'X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/stories
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"status":"ok","data":[{"id":1,"slug":"serie-a-in-campo-inter-napoli-1-2-diretta","title":"Serie A: in campo Inter-Napoli 1-2 DIRETTA","summary":"Ospiti avanti con Politano e Hojlund","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["IT"],"languages":["it"],"image_url":null,"first_reported_at":"2026-09-05T19:21:27.000000Z","last_updated_at":"2026-09-05T21:28:41.000000Z","category":{"name":"Sports","slug":"sports","icon":"\u26bd","color":"#F97316"}},{"id":2,"slug":"us-pentagon-submits-military-officers-to-polygraph-tests-amid-leaks-investigation","title":"US Pentagon Submits Military Officers to Polygraph Tests Amid Leaks Investigation","summary":"Une cinquantaine de membres de l\u2019\u00e9tat-major ont \u00e9t\u00e9 interrog\u00e9s au polygraphe pour identifier la source d\u2019une fuite sur une possible p\u00e9nurie de munitions am\u00e9ricaines.","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["FR"],"languages":["fr"],"image_url":"https:\/\/img.lemde.fr\/2026\/09\/05\/445\/0\/2754\/1377\/644\/322\/60\/0\/c8bd925_upload-1-tj8rbj5z61px-000-b4jv8t3.jpg","first_reported_at":"2026-09-05T19:17:10.000000Z","last_updated_at":"2026-09-05T21:29:05.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}},{"id":3,"slug":"incappucciati-invadono-dover-contro-i-migranti","title":"Incappucciati invadono Dover contro i migranti","summary":" Farage ''fermeremo le barche''. Il leader di Reform tenta il rilancio: ''Se non vinciamo le elezioni sar\u00e0 irreversibile il declino inglese'' ","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["IT"],"languages":["it"],"image_url":null,"first_reported_at":"2026-09-05T19:17:09.000000Z","last_updated_at":"2026-09-05T21:30:41.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}},{"id":4,"slug":"ucraina-in-corso-lincontro-di-putin-con-witkoff-e-kushner","title":"Ucraina, in corso l''incontro di Putin con Witkoff e Kushner","summary":"Gi inviati americani Steve Witkoff e Jared Kushner in Russia","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["IT"],"languages":["it"],"image_url":null,"first_reported_at":"2026-09-05T19:12:53.000000Z","last_updated_at":"2026-09-05T21:31:02.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}},{"id":5,"slug":"russia-ukraine-talks-poutine-meets-with-us-envoy-team","title":"Russia-Ukraine Talks: Poutine Meets with US Envoy Team","summary":"Donald Trump n\u2019a pas pr\u00e9cis\u00e9 si la proposition dont ses \u00e9missaires sont porteurs impliquait une cession de territoire de la part de l\u2019Ukraine, comme il l\u2019avait laiss\u00e9 entendre auparavant. Les deux hommes doivent rencontrer dimanche Volodymyr Zelensky, \u00e0 Kiev, pour la premi\u00e8re fois depuis le d\u00e9but de leur travail de m\u00e9diateur.","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["FR"],"languages":["fr"],"image_url":"https:\/\/img.lemde.fr\/2026\/09\/05\/161\/0\/3530\/1765\/644\/322\/60\/0\/a78f564_ftp-1-qbftbcem9vj2-2026-09-05t162917z-1623591992-rc24dna8apcq-rtrmadp-3-ukraine-crisis-russia-usa.JPG","first_reported_at":"2026-09-05T19:12:40.000000Z","last_updated_at":"2026-09-05T21:31:20.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}},{"id":6,"slug":"usa-colpiscono-tre-petroliere-iraniane-missile-vicino-kharg","title":"Usa colpiscono tre petroliere iraniane, missile vicino Kharg","summary":"Ritorsione per razzi su navi. Tycoon: ''Solo Attacchi, briciole''. Piano per il dopo guerra ","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["IT"],"languages":["it"],"image_url":null,"first_reported_at":"2026-09-05T19:03:52.000000Z","last_updated_at":"2026-09-05T21:31:40.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}},{"id":7,"slug":"la-procura-di-roma-indaga-sugli-italiani-negli-epstein-file","title":"La procura di Roma indaga sugli italiani negli Epstein file","summary":"Fascicolo contro ignoti, rogatoria su atti riservati. Differenza Donna: ''passo importante'' ","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["IT"],"languages":["it"],"image_url":null,"first_reported_at":"2026-09-05T19:02:59.000000Z","last_updated_at":"2026-09-05T21:33:14.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}},{"id":8,"slug":"famiglia-nel-bosco-la-decisione-ci-spezza-il-cuore-faremo-ricorso","title":"Famiglia nel bosco: ''La decisione ci spezza il cuore, faremo ricorso''","summary":"Video dei genitori dopo la decisione del tribunale. Pillon: ''inerzia dei servizi sociali''","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["IT"],"languages":["it"],"image_url":null,"first_reported_at":"2026-09-05T19:01:59.000000Z","last_updated_at":"2026-09-05T21:34:05.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}},{"id":9,"slug":"incidente-al-rally-1000-miglia-spettatore-muore-investito","title":"Incidente al Rally 1000 Miglia, spettatore muore investito","summary":"Vittima un 63enne di Torino, la direzione di gara ha sospeso la manifestazione","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["IT"],"languages":["it"],"image_url":null,"first_reported_at":"2026-09-05T19:00:42.000000Z","last_updated_at":"2026-09-05T21:35:10.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}},{"id":10,"slug":"hamilton-takes-fourth-at-monza-despite-controversy","title":"English","summary":"Charles Leclerc secured third place despite a penalty for his teammate, Daniel Ricciardo, while Pierre Gasly took pole position at the Italian Grand Prix. Meanwhile, Lewis Hamilton finished fourth, amidst controversy surrounding the penalty given to Ricciardo.","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["IT"],"languages":["it"],"image_url":null,"first_reported_at":"2026-09-05T18:48:06.000000Z","last_updated_at":"2026-09-05T21:35:28.000000Z","category":{"name":"Sports","slug":"sports","icon":"\u26bd","color":"#F97316"}},{"id":11,"slug":"segregata-dal-marito-in-egitto-salva-allarrivo-allaeroporto","title":"Segregata dal marito in Egitto, salva all''arrivo all''aeroporto","summary":"Ragusana riconosciuta dalla Polaria a Palermo mostra segno convenzionale d''aiuto","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["IT"],"languages":["it"],"image_url":null,"first_reported_at":"2026-09-05T18:37:07.000000Z","last_updated_at":"2026-09-05T21:37:03.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}},{"id":12,"slug":"f1-saetta-mcqueen-compie-un-giro-donore-a-monza-la-safety-car-si-veste-cars","title":"F1: Saetta McQueen compie un giro d''onore a Monza, la Safety Car si veste \"Cars\"","summary":"Disney e Formula 1 celebrano all''Autodromo anniversario del celebre franchise Pixar","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["IT"],"languages":["it"],"image_url":null,"first_reported_at":"2026-09-05T18:31:21.000000Z","last_updated_at":"2026-09-05T21:38:38.000000Z","category":{"name":"Sports","slug":"sports","icon":"\u26bd","color":"#F97316"}},{"id":13,"slug":"scintille-tra-vannacci-e-monti-a-cernobbio-combattero-la-sua-retorica-fascista-il-leader-di-fnv-accuse-ridicole","title":"Scintille tra Vannacci e Monti a Cernobbio: ''Combatter\u00f2 la sua retorica fascista''. Il leader di FnV: ''Accuse ridicole''","summary":"Vannacci: ''Non tutti scalpitano per integrarsi nell''Unione europea, in Italia s\u00ec al Reborn''","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["IT"],"languages":["it"],"image_url":null,"first_reported_at":"2026-09-05T18:13:11.000000Z","last_updated_at":"2026-09-05T21:40:12.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}},{"id":14,"slug":"italian-talent-exodus-costs-11-billion-calderones-20-share","title":"Italian Talent Exodus Costs $11 Billion, Calderone''s 20% Share","summary":"Studio a Cernobbio. La ministra, dati cambiati, ora crescono i posti fissi","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["IT"],"languages":["it"],"image_url":null,"first_reported_at":"2026-09-05T18:12:49.000000Z","last_updated_at":"2026-09-05T21:40:36.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}},{"id":15,"slug":"un-diamante-dalle-ceneri-di-un-sacerdote-per-riflettere-la-luce-di-dio","title":"Un diamante dalle ceneri di un sacerdote, ''per riflettere la luce di Dio''","summary":"La richiesta del prete marchigiano, morto nel 2025, in un video-testamento","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["IT"],"languages":["it"],"image_url":null,"first_reported_at":"2026-09-05T18:10:55.000000Z","last_updated_at":"2026-09-05T21:42:15.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}},{"id":16,"slug":"chinese-citizen-rescued-from-tunnel-burial-in-nepal","title":"Chinese Citizen Rescued from Tunnel Burial in Nepal","summary":"Esercito, ''sopravvissuto nella condotta di una centrale idroelettrica''","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["IT"],"languages":["it"],"image_url":null,"first_reported_at":"2026-09-05T17:59:10.000000Z","last_updated_at":"2026-09-05T21:42:39.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}},{"id":17,"slug":"il-padre-di-lorena-la-politica-sia-unita-contro-la-violenza-meloni-raccoglie-lappello-ogni-donna-uccisa-e-una-sconfitta-per-tutti","title":"Il padre di Lorena: ''La politica sia unita contro la violenza''. Meloni raccoglie l''appello: ''Ogni donna uccisa \u00e8 una sconfitta per tutti''","summary":"''Votate all''unanimit\u00e0 le norme e lavorate su scuole e centri antiviolenza''","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["IT"],"languages":["it"],"image_url":null,"first_reported_at":"2026-09-05T17:53:37.000000Z","last_updated_at":"2026-09-05T21:44:44.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}},{"id":18,"slug":"us-destroys-three-iranian-oil-tankers-in-response-to-attacks-on-us-vessels-in-persian-gulf","title":"US Destroys Three Iranian Oil Tankers in Response to Attacks on US Vessels in Persian Gulf","summary":"Un porte-avions et un destroyer am\u00e9ricains \u00ab\u00a0ont \u00e9chapp\u00e9 \u00e0 de multiples attaques iraniennes non provoqu\u00e9es\u00a0\u00bb, selon l\u2019arm\u00e9e am\u00e9ricaine.","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["FR"],"languages":["fr"],"image_url":"https:\/\/img.lemde.fr\/2026\/09\/05\/71\/0\/1730\/865\/644\/322\/60\/0\/e425269_ftp-1-dxsvmy5yxi9q-5003234-01-06.jpg","first_reported_at":"2026-09-05T17:50:33.000000Z","last_updated_at":"2026-09-05T21:45:13.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}},{"id":19,"slug":"riaperte-le-indagini-sui-delitti-del-mostro-di-modena","title":"Riaperte le indagini sui delitti del ''mostro di Modena''","summary":"Almeno otto donne uccise dal 1985, accertamenti sui reperti e sugli atti dell''epoca","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["IT"],"languages":["it"],"image_url":null,"first_reported_at":"2026-09-05T17:34:02.000000Z","last_updated_at":"2026-09-05T21:45:34.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}},{"id":20,"slug":"on-sadapte-a-la-situation-a-laval-les-terrains-de-football-a-lepreuve-de-la-secheresse-et-du-changement-climatique","title":"\u00ab\u00a0On s\u2019adapte \u00e0 la situation\u00a0\u00bb\u00a0: \u00e0 Laval, les terrains de football \u00e0 l\u2019\u00e9preuve de la s\u00e9cheresse et du changement climatique","summary":"Avec les \u00e9pisodes caniculaires de l\u2019\u00e9t\u00e9, la Mayenne a instaur\u00e9 des restrictions d\u2019usage de l\u2019eau. Si le Stade lavallois, pensionnaire de Ligue\u00a02, est parvenu \u00e0 pr\u00e9server sa pelouse, le terrain de l\u2019US\u00a0Laval, club amateur, reste impraticable.","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["FR"],"languages":["fr"],"image_url":"https:\/\/img.lemde.fr\/2026\/09\/05\/732\/0\/4256\/2128\/644\/322\/60\/0\/8de8e37_upload-1-5vsps142zh10-vfeo-laval-040926-1471.jpg","first_reported_at":"2026-09-05T17:30:01.000000Z","last_updated_at":"2026-09-05T21:47:15.000000Z","category":{"name":"Sports","slug":"sports","icon":"\u26bd","color":"#F97316"}}],"meta":{"total":147,"per_page":20,"current_page":1,"last_page":8}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '30'
+          x-ratelimit-remaining: '27'
+          access-control-allow-origin: 'http://localhost:8080'
+          access-control-expose-headers: 'X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/stories/trending/list
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"status":"ok","data":[{"id":35,"slug":"cessez-le-feu-temporaire-a-kiev-pendant-trois-jours-alors-que-les-emissaires-americains-sy-rendent","title":"Cessez-le-feu temporaire \u00e0 Kiev pendant trois jours alors que les \u00e9missaires am\u00e9ricains s''y rendent","summary":"\nLe pr\u00e9sident russe Vladimir Poutine a ordonn\u00e9, samedi, de cesser les frappes sur Kiev pendant trois jours, alors que les Am\u00e9ricains Steve Witkoff et Jared Kushner doivent s''y rendre. Les deux \u00e9missaires du pr\u00e9sident am\u00e9ricain ont atterri \u00e0 Moscou avec un plan visant \u00e0 mettre fin \u00e0 plus de quatre ans de guerre en Ukraine.\n","evidence_level":"low","evidence_score":25,"importance_score":50,"sources_count":1,"articles_count":2,"independent_sources_count":1,"is_trending":true,"countries":["FR"],"languages":["fr"],"image_url":"https:\/\/s.france24.com\/media\/display\/e4877664-a944-11f1-ab58-005056bfb2b6\/w:1024\/p:16x9\/FR-20260905-180444-180832-CS.jpg","first_reported_at":"2026-09-05T14:56:54.000000Z","last_updated_at":"2026-09-05T22:01:08.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}},{"id":22,"slug":"us-envoys-meet-putin-in-moscow-for-ukraine-talks","title":"US envoys meet Putin in Moscow for Ukraine talks","summary":"President Trump says his envoys Steve Witkoff and Jared Kushner are \"bringing with them a proposal to end the war\".","evidence_level":"moderate","evidence_score":40,"importance_score":50,"sources_count":2,"articles_count":2,"independent_sources_count":2,"is_trending":true,"countries":["GB","FR"],"languages":["en"],"image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/5833\/live\/8e0ff630-a94e-11f1-ae8c-2528accc9a1a.jpg","first_reported_at":"2026-09-05T16:14:00.000000Z","last_updated_at":"2026-09-05T21:48:29.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}},{"id":21,"slug":"us-diplomat-blames-israel-for-palestinian-protection-in-west-bank","title":"US Diplomat Blames Israel for Palestinian Protection in West Bank","summary":"\n\u0623\u062c\u0631\u0649 \u0627\u0644\u0633\u0641\u064a\u0631 \u0627\u0644\u0623\u0645\u0631\u064a\u0643\u064a \u0641\u064a \u0625\u0633\u0631\u0627\u0626\u064a\u0644\u00a0\u0645\u0627\u064a\u0643 \u0647\u0627\u0643\u0627\u0628\u064a \u0627\u0644\u0633\u0628\u062a \u0632\u064a\u0627\u0631\u0629 \u0625\u0644\u0649\u00a0\u0628\u0644\u062f\u0629 \u062a\u0631\u0645\u0633\u0639\u064a\u0627 \u0642\u0631\u0628 \u0631\u0627\u0645 \u0627\u0644\u0644\u0647 \u0628\u0648\u0633\u0637 \u0627\u0644\u0636\u0641\u0629 \u0627\u0644\u063a\u0631\u0628\u064a\u0629 \u0627\u0644\u0645\u062d\u062a\u0644\u0629\u060c \u0627\u0644\u062a\u064a \u064a\u062d\u0645\u0644 \u0645\u0639\u0638\u0645 \u0633\u0643\u0627\u0646\u0647\u0627 \u0627\u0644\u062c\u0646\u0633\u064a\u0629 \u0627\u0644\u0623\u0645\u0631\u064a\u0643\u064a\u0629\u060c \u0648\u0642\u0627\u0644 \u0625\u0646\u0647 \u064a\u0631\u064a\u062f \u0627\u0644\u0627\u0633\u062a\u0645\u0627\u0639 \u0625\u0644\u0649 \"\u0634\u0643\u0627\u0648\u0627\u0647\u0645 \u0627\u0644\u0645\u0634\u0631\u0648\u0639\u0629\"\u060c \u0628\u0639\u062f\u0645\u0627 \u062a\u0635\u0627\u0639\u062f\u062a \u062d\u062f\u0629 \u0647\u062c\u0645\u0627\u062a \u0627\u0644\u0645\u0633\u062a\u0648\u0637\u0646\u064a\u0646 \u0639\u0644\u0649 \u0627\u0644\u0641\u0644\u0633\u0637\u064a\u0646\u064a\u064a\u0646.\n","evidence_level":"low","evidence_score":25,"importance_score":50,"sources_count":1,"articles_count":2,"independent_sources_count":1,"is_trending":true,"countries":["FR"],"languages":["ar"],"image_url":"https:\/\/s.france24.com\/media\/display\/db43d23e-a924-11f1-b6c3-005056a97e36\/w:1024\/p:16x9\/2026-09-05T065615Z-1057574229-RC2UCNAUVX83-RTRMADP-3-ISRAEL-PALESTINIANS-SETTLERS-USA.jpg","first_reported_at":"2026-09-05T15:48:29.000000Z","last_updated_at":"2026-09-05T21:47:42.000000Z","category":{"name":"Politics","slug":"politics","icon":"\ud83c\udfdb\ufe0f","color":"#3B82F6"}}]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '30'
+          x-ratelimit-remaining: '26'
+          access-control-allow-origin: 'http://localhost:8080'
+          access-control-expose-headers: 'X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/stories/{story_id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      story_id:
+        custom: []
+        name: story_id
+        description: 'The ID of the story.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      story_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"status":"ok","data":{"id":1,"slug":"serie-a-in-campo-inter-napoli-1-2-diretta","title":"Serie A: in campo Inter-Napoli 1-2 DIRETTA","summary":"Ospiti avanti con Politano e Hojlund","evidence_level":"low","evidence_score":20,"importance_score":50,"sources_count":1,"articles_count":1,"independent_sources_count":1,"is_trending":false,"countries":["IT"],"languages":["it"],"image_url":null,"first_reported_at":"2026-09-05T19:21:27.000000Z","last_updated_at":"2026-09-05T21:28:41.000000Z","category":{"name":"Sports","slug":"sports","icon":"\u26bd","color":"#F97316"},"what_happened":null,"what_changed":null,"sources_agree":null,"sources_disagree":null,"unconfirmed_claims":null,"tags":null,"articles":[{"id":298,"title":"Serie A: in campo Inter-Napoli 1-2 DIRETTA","url":"https:\/\/www.ansa.it\/sito\/notizie\/sport\/calcio\/2026\/09\/05\/serie-a-in-campo-inter-napoli-0-0-diretta_f0786866-9862-46fc-b0c1-29d14f19c86c.html","source":"ANSA","published_at":"2026-09-05T19:21:27.000000Z","perspective":"neutral"}],"claims":[]}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '30'
+          x-ratelimit-remaining: '25'
+          access-control-allow-origin: 'http://localhost:8080'
+          access-control-expose-headers: 'X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/articles
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"status":"ok","data":[{"id":1339,"title":"OpenAI agent ''infiltrated'' Australian government website, PM says","url":"https:\/\/www.bbc.co.uk\/news\/articles\/c6vgy0333dppo?at_medium=RSS&at_campaign=rss","description":"Albanese said he expressed \"concern\" to OpenAI founder Sam Altman, after authorities were informed three months after the breach in June.","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/f010\/live\/69f3ee00-b795-11f1-a430-4d16ee157c41.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-24T03:22:54.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1352,"title":"They were labelled ''pervert glasses''. Will a camera-free version transform their image?","url":"https:\/\/www.bbc.co.uk\/news\/articles\/cwp80l0my1x2o?at_medium=RSS&at_campaign=rss","description":"Meta has unveiled audio-only smart glasses, with some questioning whether it is a response to the backlash over privacy.","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/4bad\/live\/e6a022b0-b75a-11f1-bc1f-3f186ca4140c.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-24T00:50:24.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1351,"title":"In Amish country, nurses go door to door to stop deadly spread of measles","url":"https:\/\/www.bbc.co.uk\/news\/articles\/ck3wjyjgj37po?at_medium=RSS&at_campaign=rss","description":"With four measles-related deaths in Pennsylvania, health officials are hoping to get people on board with vaccines in private.","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/3b31\/live\/276fdbc0-b768-11f1-a7b2-f3bdba1cd194.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-24T00:15:46.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1353,"title":"Residents eating garden weeds in Russian-occupied city cut off from food and water","url":"https:\/\/www.bbc.co.uk\/news\/articles\/c60qxywdx4vvo?at_medium=RSS&at_campaign=rss","description":"The BBC has spoken to residents in the Russian-occupied Ukrainian town of Oleshky who say they are being \"constantly shelled\".","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/3671\/live\/a0279100-b76a-11f1-a7b2-f3bdba1cd194.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-23T23:58:50.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1354,"title":"''Make women feel seen'': Why the Dutch have a new word for labia","url":"https:\/\/www.bbc.co.uk\/news\/articles\/cn4klprmr0go?at_medium=RSS&at_campaign=rss","description":"Campaigners hope the new words will lead to less body shaming and more sex positivity.","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/3b5f\/live\/11ea22b0-b736-11f1-aa9c-3d062fa3aea7.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-23T23:42:38.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1355,"title":"Indians are discovering the thrill of shopping without paying","url":"https:\/\/www.bbc.co.uk\/news\/articles\/cwn741v5rdpxo?at_medium=RSS&at_campaign=rss","description":"Dopamine sites mimic shopping\u2019s thrill without the spending, turning the ritual of consumption into a digital game.","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/083e\/live\/e4049770-b732-11f1-9f81-a10976817ca3.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-23T23:14:10.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1357,"title":"A red carpet and military flyover - How Trump welcomed Xi","url":"https:\/\/www.bbc.co.uk\/news\/videos\/c6804ne8knklo?at_medium=RSS&at_campaign=rss","description":"The two B-1 bombers that flew overhead are a key part of the US''s combat arsenal, and produce a notoriously loud roar when they pass by.","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/92fa\/live\/b4540960-b7a1-11f1-ba14-197cc9acea52.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-23T23:03:56.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1340,"title":"AI superpower ambitions take centre stage as Trump and Xi meet","url":"https:\/\/www.bbc.co.uk\/news\/articles\/c6gqdgg8w59xo?at_medium=RSS&at_campaign=rss","description":"The US and China are vying for AI supremacy while seeking to keep it under human control.","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/149c\/live\/60c365b0-b306-11f1-aa6a-fb974fe212f6.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-23T22:01:17.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1358,"title":"Watch: The arms race in space and how the UK is defending itself","url":"https:\/\/www.bbc.co.uk\/news\/videos\/c34gdygn5lqpo?at_medium=RSS&at_campaign=rss","description":"The UK has jammed satellites to defend itself from hostile threats, the BBC has been told.","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/801a\/live\/bba851a0-b790-11f1-b1d1-571ed4d7ff2c.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-23T21:29:04.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1343,"title":"Trump''s Board of Peace unveils $2.45bn plan to begin Gaza''s reconstruction","url":"https:\/\/www.bbc.co.uk\/news\/articles\/cwlyke0mm0x3o?at_medium=RSS&at_campaign=rss","description":"The figure was announced during a meeting of the group''s board at the sidelines of the UN General Assembly in New York. ","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/77bf\/live\/26f24db0-b770-11f1-a7b2-f3bdba1cd194.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-23T21:26:14.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1345,"title":"UK survivor of Canadian poison seller says he exploited her despair","url":"https:\/\/www.bbc.co.uk\/news\/articles\/cmvgy4237gq9o?at_medium=RSS&at_campaign=rss","description":"Elisabeth Belien tells Kenneth Law''s sentencing hearing she took the poison when she was just 23 years old.","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/8549\/live\/b7449770-b792-11f1-a7dc-51a9fb487fda.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-23T21:16:00.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1347,"title":"Harvey Weinstein sentenced to 15 years in prison for sexual assault","url":"https:\/\/www.bbc.co.uk\/news\/articles\/cm98626n260yo?at_medium=RSS&at_campaign=rss","description":"Assault survivor Miriam Haley said the \"devastating effect on my life and sense of security that may never go away\".","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/27d6\/live\/b340ed80-b766-11f1-a7b2-f3bdba1cd194.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-23T18:51:12.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1341,"title":"Iran''s president tells Trump it will never ''bend the knee''","url":"https:\/\/www.bbc.co.uk\/news\/articles\/cqvgyjy23ggjo?at_medium=RSS&at_campaign=rss","description":"Masoud Pezeshkian''s defiant speech to the UN comes after the US president threatened to \"annihilate\" Iran if a peace deal is not agreed soon.","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/fe3f\/live\/8c85eb50-b766-11f1-b1d1-571ed4d7ff2c.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-23T18:15:31.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1342,"title":"Ethiopia and Tigray accuse each of launching offensives, fuelling fears of new war","url":"https:\/\/www.bbc.co.uk\/news\/articles\/cry8zwwq21pxo?at_medium=RSS&at_campaign=rss","description":"The local authorities reportedly seize Tigray''s airports following reports of recent drone strikes.","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/9b8d\/live\/5b472620-b767-11f1-a7b2-f3bdba1cd194.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-23T16:53:37.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1359,"title":"Watch: How toxic smog from wildfires is making Indonesians sick","url":"https:\/\/www.bbc.co.uk\/news\/videos\/c962j1jgx884o?at_medium=RSS&at_campaign=rss","description":"Around 175,000 people in Indonesia have suffered from respiratory illness since August.","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/929e\/live\/2a02d820-b767-11f1-a7b2-f3bdba1cd194.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-23T15:46:28.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1348,"title":"Poland accuses Russian military helicopter of violating its airspace","url":"https:\/\/www.bbc.co.uk\/news\/articles\/c699d2dn9z0mo?at_medium=RSS&at_campaign=rss","description":"Poland says the aircraft stayed in its skies for 42 seconds, forcing the Nato member to scramble its fighter jets.","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/0465\/live\/f3c02980-b75b-11f1-8e7f-6f99c81f3136.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-23T15:37:20.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1350,"title":"Eleven killed in mass shooting at house in South Africa","url":"https:\/\/www.bbc.co.uk\/news\/articles\/crgjqxzl097eo?at_medium=RSS&at_campaign=rss","description":"One of those killed is believed to be a pregnant woman, police said.","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/5581\/live\/0a1fdd60-b716-11f1-8d21-19ad84e0e822.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-23T14:02:55.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1344,"title":"Dramatic eviction of woman aged 87 highlights Spain''s housing shortage","url":"https:\/\/www.bbc.co.uk\/news\/articles\/c6vgy55lm8z1o?at_medium=RSS&at_campaign=rss","description":"The tenant of the flat in Madrid, Maricarmen, was unable to pay the rent set by the firm which recently bought it.","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/3750\/live\/bcba89f0-b759-11f1-a430-4d16ee157c41.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-23T12:31:31.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1346,"title":"Dolly Parton''s manager accuses her nephew of ''threats and intimidation''","url":"https:\/\/www.bbc.co.uk\/news\/articles\/c670lydl5wg5o?at_medium=RSS&at_campaign=rss","description":"Bryan Seaver, who announced Parton''s death to the world, is accused of trying to extort her estate.","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/a68a\/live\/f463e6c0-b75f-11f1-b1d1-571ed4d7ff2c.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-23T12:22:53.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}},{"id":1360,"title":"Watch: Trump and Xi are meeting on US soil - what''s at stake?","url":"https:\/\/www.bbc.co.uk\/news\/videos\/c38xk275jd21o?at_medium=RSS&at_campaign=rss","description":"The BBC\u2019s China correspondent and US editor explain everything you need to know ahead of the Trump-Xi meeting in Washington DC.","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/0796\/live\/9166c030-b721-11f1-b1d1-571ed4d7ff2c.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-23T11:00:09.000000Z","status":"raw","importance_score":0,"ai_summary":null,"source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":null,"name":null,"slug":null}}],"meta":{"total":1360,"per_page":20,"current_page":1,"last_page":68}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '30'
+          x-ratelimit-remaining: '24'
+          access-control-allow-origin: 'http://localhost:8080'
+          access-control-expose-headers: 'X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/articles/stats/overview
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"status":"ok","data":{"total":1360,"raw":1210,"processing":0,"processed":150,"failed":0,"duplicates":0,"today":0}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '30'
+          x-ratelimit-remaining: '23'
+          access-control-allow-origin: 'http://localhost:8080'
+          access-control-expose-headers: 'X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/articles/{article_id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      article_id:
+        custom: []
+        name: article_id
+        description: 'The ID of the article.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      article_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"status":"ok","data":{"id":1,"title":"US envoys meet Putin in Moscow for Ukraine talks","url":"https:\/\/www.bbc.co.uk\/news\/articles\/cx2zqp46g8eo?at_medium=RSS&at_campaign=rss","description":"President Trump says his envoys Steve Witkoff and Jared Kushner are \"bringing with them a proposal to end the war\".","image_url":"https:\/\/ichef.bbci.co.uk\/ace\/standard\/240\/cpsprodpb\/5833\/live\/8e0ff630-a94e-11f1-ae8c-2528accc9a1a.jpg","author":null,"language":"en","country_code":"GB","published_at":"2026-09-05T17:18:31.000000Z","status":"processed","importance_score":50,"ai_summary":"US President Trump''s envoys Steve Witkoff and Jared Kushner met with Russian President Putin in Moscow to discuss a proposal to end the war in Ukraine.","source":{"id":4,"name":"BBC News","slug":"bbc","bias":"center-left"},"category":{"id":1,"name":"Politics","slug":"politics"},"ai_categories":["politics"],"is_duplicate":false,"duplicate_of":null,"stories":["us-envoys-meet-putin-in-moscow-for-ukraine-talks"],"entities":[]}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '30'
+          x-ratelimit-remaining: '22'
+          access-control-allow-origin: 'http://localhost:8080'
+          access-control-expose-headers: 'X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/briefings
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"status":"ok","data":[{"id":4,"type":"daily","title":"Daily News Briefing","period_start":"2026-09-18","period_end":"2026-09-18","stories_count":10,"published_at":"2026-09-19T13:43:52.000000Z"},{"id":3,"type":"monthly","title":"Monthly News Review Briefing","period_start":"2026-08-01","period_end":"2026-08-31","stories_count":10,"published_at":"2026-09-08T12:26:09.000000Z"},{"id":2,"type":"weekly","title":"Weekly Briefing \u2014 Week of Sep 08, 2026","period_start":"2026-08-31","period_end":"2026-09-06","stories_count":20,"published_at":"2026-09-08T12:24:35.000000Z"},{"id":1,"type":"daily","title":"Global News Briefing","period_start":"2026-09-05","period_end":"2026-09-05","stories_count":10,"published_at":"2026-09-06T14:22:08.000000Z"}],"meta":{"total":4,"current_page":1,"last_page":1}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '30'
+          x-ratelimit-remaining: '21'
+          access-control-allow-origin: 'http://localhost:8080'
+          access-control-expose-headers: 'X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/briefings/latest/{type}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      type:
+        custom: []
+        name: type
+        description: ''
+        required: true
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      type: consequatur
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 422
+        content: '{"status":"error","message":"Invalid briefing type."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '30'
+          x-ratelimit-remaining: '20'
+          access-control-allow-origin: 'http://localhost:8080'
+          access-control-expose-headers: 'X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/briefings/{briefing_id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      briefing_id:
+        custom: []
+        name: briefing_id
+        description: 'The ID of the briefing.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      briefing_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"status":"ok","data":{"id":1,"type":"daily","title":"Global News Briefing","introduction":"Good morning, this is your daily news briefing. We bring you the latest updates on global events, politics, and sports. Our team of experts has curated the top stories for you today.","sections":"Our briefing covers the latest news on politics, sports, and global events.","conclusion":"That''s all for today''s news briefing. We''ll be back with more updates tomorrow.","top_stories":"Today''s top stories include a dramatic match in Serie A, ongoing investigations into US military leaks, and tensions between migrants and authorities in Dover. Additionally, high-level talks between Russia and Ukraine are underway.","key_developments":"Key developments include the ongoing investigation into US military leaks, with the Pentagon submitting military officers to polygraph tests. In another development, tensions between migrants and authorities in Dover are escalating. Meanwhile, high-level talks between Russia and Ukraine are underway.","period_start":"2026-09-05","period_end":"2026-09-05","stories_count":10,"articles_count":10,"sources_count":10,"languages_available":["en","ar"],"published_at":"2026-09-06T14:22:08.000000Z","stories":[{"slug":"serie-a-in-campo-inter-napoli-1-2-diretta","title":"Serie A: in campo Inter-Napoli 1-2 DIRETTA","section":"sports","order":1,"summary":"{\"en\":\"Ospiti avanti con Politano e Hojlund\",\"ar\":\"Ospiti avanti con Politano e Hojlund\"}"},{"slug":"us-pentagon-submits-military-officers-to-polygraph-tests-amid-leaks-investigation","title":"US Pentagon Submits Military Officers to Polygraph Tests Amid Leaks Investigation","section":"politics","order":2,"summary":"{\"en\":\"Une cinquantaine de membres de l\\u2019\\u00e9tat-major ont \\u00e9t\\u00e9 interrog\\u00e9s au polygraphe pour identifier la source d\\u2019une fuite sur une possible p\\u00e9nurie de munitions am\\u00e9ricaines.\",\"ar\":\"Une cinquantaine de membres de l\\u2019\\u00e9tat-major ont \\u00e9t\\u00e9 interrog\\u00e9s au polygraphe pour identifier la source d\\u2019une fuite sur une possible p\\u00e9nurie de munitions am\\u00e9ricaines.\"}"},{"slug":"incappucciati-invadono-dover-contro-i-migranti","title":"Incappucciati invadono Dover contro i migranti","section":"politics","order":3,"summary":"{\"en\":\" Farage ''fermeremo le barche''. Il leader di Reform tenta il rilancio: ''Se non vinciamo le elezioni sar\\u00e0 irreversibile il declino inglese'' \",\"ar\":\" Farage ''fermeremo le barche''. Il leader di Reform tenta il rilancio: ''Se non vinciamo le elezioni sar\\u00e0 irreversibile il declino inglese'' \"}"},{"slug":"ucraina-in-corso-lincontro-di-putin-con-witkoff-e-kushner","title":"Ucraina, in corso l''incontro di Putin con Witkoff e Kushner","section":"politics","order":4,"summary":"{\"en\":\"Gi inviati americani Steve Witkoff e Jared Kushner in Russia\",\"ar\":\"Gi inviati americani Steve Witkoff e Jared Kushner in Russia\"}"},{"slug":"russia-ukraine-talks-poutine-meets-with-us-envoy-team","title":"Russia-Ukraine Talks: Poutine Meets with US Envoy Team","section":"politics","order":5,"summary":"{\"en\":\"Donald Trump n\\u2019a pas pr\\u00e9cis\\u00e9 si la proposition dont ses \\u00e9missaires sont porteurs impliquait une cession de territoire de la part de l\\u2019Ukraine, comme il l\\u2019avait laiss\\u00e9 entendre auparavant. Les deux hommes doivent rencontrer dimanche Volodymyr Zelensky, \\u00e0 Kiev, pour la premi\\u00e8re fois depuis le d\\u00e9but de leur travail de m\\u00e9diateur.\",\"ar\":\"Donald Trump n\\u2019a pas pr\\u00e9cis\\u00e9 si la proposition dont ses \\u00e9missaires sont porteurs impliquait une cession de territoire de la part de l\\u2019Ukraine, comme il l\\u2019avait laiss\\u00e9 entendre auparavant. Les deux hommes doivent rencontrer dimanche Volodymyr Zelensky, \\u00e0 Kiev, pour la premi\\u00e8re fois depuis le d\\u00e9but de leur travail de m\\u00e9diateur.\"}"},{"slug":"usa-colpiscono-tre-petroliere-iraniane-missile-vicino-kharg","title":"Usa colpiscono tre petroliere iraniane, missile vicino Kharg","section":"politics","order":6,"summary":"{\"en\":\"Ritorsione per razzi su navi. Tycoon: ''Solo Attacchi, briciole''. Piano per il dopo guerra \",\"ar\":\"Ritorsione per razzi su navi. Tycoon: ''Solo Attacchi, briciole''. Piano per il dopo guerra \"}"},{"slug":"la-procura-di-roma-indaga-sugli-italiani-negli-epstein-file","title":"La procura di Roma indaga sugli italiani negli Epstein file","section":"politics","order":7,"summary":"{\"en\":\"Fascicolo contro ignoti, rogatoria su atti riservati. Differenza Donna: ''passo importante'' \",\"ar\":\"Fascicolo contro ignoti, rogatoria su atti riservati. Differenza Donna: ''passo importante'' \"}"},{"slug":"famiglia-nel-bosco-la-decisione-ci-spezza-il-cuore-faremo-ricorso","title":"Famiglia nel bosco: ''La decisione ci spezza il cuore, faremo ricorso''","section":"politics","order":8,"summary":"{\"en\":\"Video dei genitori dopo la decisione del tribunale. Pillon: ''inerzia dei servizi sociali''\",\"ar\":\"Video dei genitori dopo la decisione del tribunale. Pillon: ''inerzia dei servizi sociali''\"}"},{"slug":"incidente-al-rally-1000-miglia-spettatore-muore-investito","title":"Incidente al Rally 1000 Miglia, spettatore muore investito","section":"politics","order":9,"summary":"{\"en\":\"Vittima un 63enne di Torino, la direzione di gara ha sospeso la manifestazione\",\"ar\":\"Vittima un 63enne di Torino, la direzione di gara ha sospeso la manifestazione\"}"},{"slug":"hamilton-takes-fourth-at-monza-despite-controversy","title":"English","section":"sports","order":10,"summary":"{\"en\":\"Charles Leclerc secured third place despite a penalty for his teammate, Daniel Ricciardo, while Pierre Gasly took pole position at the Italian Grand Prix. Meanwhile, Lewis Hamilton finished fourth, amidst controversy surrounding the penalty given to Ricciardo.\",\"ar\":\"\"}"}]}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '30'
+          x-ratelimit-remaining: '19'
+          access-control-allow-origin: 'http://localhost:8080'
+          access-control-expose-headers: 'X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/dashboard
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"status":"ok","data":{"articles":{"total":1360,"today":0,"raw":1210,"processed":150,"duplicates":0},"sources":{"total":36,"active":33},"stories":{"total":147,"published":147,"trending":3},"categories":10,"briefings":4,"ai":{"available_providers":[]},"languages":{"ar":348,"en":535,"es":170,"fr":165,"it":142}},"meta":{"cached":true,"ttl_seconds":300}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '30'
+          x-ratelimit-remaining: '18'
+          access-control-allow-origin: 'http://localhost:8080'
+          access-control-expose-headers: 'X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/sources
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"status":"ok","data":[{"id":1,"name":"Reuters","slug":"reuters","website_url":"https:\/\/www.reuters.com","country_code":"GB","language":"en","bias":"center","type":"wire_agency","reliability_score":90,"reliability_label":"high","is_active":false,"fetch_interval_minutes":15,"last_fetched_at":"2026-09-05T17:30:33.000000Z","articles_count":0},{"id":2,"name":"Associated Press","slug":"ap","website_url":"https:\/\/apnews.com","country_code":"US","language":"en","bias":"center","type":"wire_agency","reliability_score":90,"reliability_label":"high","is_active":false,"fetch_interval_minutes":15,"last_fetched_at":"2026-09-05T17:30:34.000000Z","articles_count":0},{"id":3,"name":"Agence France-Presse","slug":"afp","website_url":"https:\/\/www.afp.com","country_code":"FR","language":"fr","bias":"center","type":"wire_agency","reliability_score":88,"reliability_label":"high","is_active":false,"fetch_interval_minutes":15,"last_fetched_at":null,"articles_count":0},{"id":4,"name":"BBC News","slug":"bbc","website_url":"https:\/\/www.bbc.com\/news","country_code":"GB","language":"en","bias":"center-left","type":"tv_channel","reliability_score":85,"reliability_label":"high","is_active":true,"fetch_interval_minutes":20,"last_fetched_at":"2026-09-24T03:55:53.000000Z","articles_count":116},{"id":5,"name":"Al Jazeera English","slug":"aljazeera-en","website_url":"https:\/\/www.aljazeera.com","country_code":"QA","language":"en","bias":"center-left","type":"tv_channel","reliability_score":78,"reliability_label":"medium","is_active":true,"fetch_interval_minutes":20,"last_fetched_at":"2026-09-14T14:15:24.000000Z","articles_count":0},{"id":6,"name":"DW News","slug":"dw","website_url":"https:\/\/www.dw.com\/en","country_code":"DE","language":"en","bias":"center","type":"tv_channel","reliability_score":82,"reliability_label":"high","is_active":true,"fetch_interval_minutes":20,"last_fetched_at":"2026-09-14T14:15:27.000000Z","articles_count":115},{"id":7,"name":"France 24 English","slug":"france24-en","website_url":"https:\/\/www.france24.com\/en","country_code":"FR","language":"en","bias":"center-left","type":"tv_channel","reliability_score":80,"reliability_label":"high","is_active":true,"fetch_interval_minutes":20,"last_fetched_at":"2026-09-14T14:15:29.000000Z","articles_count":62},{"id":8,"name":"RT News","slug":"rt","website_url":"https:\/\/www.rt.com","country_code":"RU","language":"en","bias":"state","type":"tv_channel","reliability_score":45,"reliability_label":"low","is_active":true,"fetch_interval_minutes":30,"last_fetched_at":"2026-09-14T14:15:34.000000Z","articles_count":113},{"id":9,"name":"\u0627\u0644\u062c\u0632\u064a\u0631\u0629","slug":"aljazeera-ar","website_url":"https:\/\/www.aljazeera.net","country_code":"QA","language":"ar","bias":"center-left","type":"tv_channel","reliability_score":78,"reliability_label":"medium","is_active":true,"fetch_interval_minutes":20,"last_fetched_at":"2026-09-14T14:15:44.000000Z","articles_count":0},{"id":10,"name":"\u0627\u0644\u0639\u0631\u0628\u064a\u0629","slug":"alarabiya","website_url":"https:\/\/www.alarabiya.net","country_code":"SA","language":"ar","bias":"center-right","type":"tv_channel","reliability_score":72,"reliability_label":"medium","is_active":true,"fetch_interval_minutes":20,"last_fetched_at":"2026-09-14T14:15:45.000000Z","articles_count":0},{"id":11,"name":"\u0641\u0631\u0627\u0646\u0633 24 \u0639\u0631\u0628\u064a","slug":"france24-ar","website_url":"https:\/\/www.france24.com\/ar","country_code":"FR","language":"ar","bias":"center-left","type":"tv_channel","reliability_score":80,"reliability_label":"high","is_active":true,"fetch_interval_minutes":20,"last_fetched_at":"2026-09-19T12:35:18.000000Z","articles_count":78},{"id":12,"name":"BBC \u0639\u0631\u0628\u064a","slug":"bbc-ar","website_url":"https:\/\/www.bbc.com\/arabic","country_code":"GB","language":"ar","bias":"center-left","type":"tv_channel","reliability_score":85,"reliability_label":"high","is_active":true,"fetch_interval_minutes":20,"last_fetched_at":"2026-09-19T12:35:17.000000Z","articles_count":70},{"id":13,"name":"Le Monde","slug":"lemonde","website_url":"https:\/\/www.lemonde.fr","country_code":"FR","language":"fr","bias":"center-left","type":"newspaper","reliability_score":85,"reliability_label":"high","is_active":true,"fetch_interval_minutes":30,"last_fetched_at":"2026-09-14T14:15:49.000000Z","articles_count":48},{"id":14,"name":"France 24 Fran\u00e7ais","slug":"france24-fr","website_url":"https:\/\/www.france24.com\/fr","country_code":"FR","language":"fr","bias":"center-left","type":"tv_channel","reliability_score":80,"reliability_label":"high","is_active":true,"fetch_interval_minutes":20,"last_fetched_at":"2026-09-14T14:15:50.000000Z","articles_count":71},{"id":15,"name":"El Pa\u00eds","slug":"elpais","website_url":"https:\/\/elpais.com","country_code":"ES","language":"es","bias":"center-left","type":"newspaper","reliability_score":83,"reliability_label":"high","is_active":true,"fetch_interval_minutes":30,"last_fetched_at":"2026-09-14T14:15:52.000000Z","articles_count":150},{"id":16,"name":"ANSA","slug":"ansa","website_url":"https:\/\/www.ansa.it","country_code":"IT","language":"it","bias":"center","type":"wire_agency","reliability_score":82,"reliability_label":"high","is_active":true,"fetch_interval_minutes":20,"last_fetched_at":"2026-09-14T14:15:54.000000Z","articles_count":82},{"id":17,"name":"\u0645\u0635\u0631\u0627\u0648\u064a","slug":"masrawy","website_url":"https:\/\/www.masrawy.com","country_code":"EG","language":"ar","bias":"center","type":"digital","reliability_score":70,"reliability_label":"medium","is_active":true,"fetch_interval_minutes":20,"last_fetched_at":"2026-09-14T14:15:55.000000Z","articles_count":0},{"id":18,"name":"\u0627\u0644\u064a\u0648\u0645 \u0627\u0644\u0633\u0627\u0628\u0639","slug":"youm7","website_url":"https:\/\/www.youm7.com","country_code":"EG","language":"ar","bias":"center","type":"digital","reliability_score":68,"reliability_label":"medium","is_active":true,"fetch_interval_minutes":20,"last_fetched_at":"2026-09-14T14:15:56.000000Z","articles_count":0},{"id":19,"name":"\u0627\u0644\u0623\u0647\u0631\u0627\u0645","slug":"ahram","website_url":"https:\/\/gate.ahram.org.eg","country_code":"EG","language":"ar","bias":"center","type":"newspaper","reliability_score":72,"reliability_label":"medium","is_active":true,"fetch_interval_minutes":30,"last_fetched_at":"2026-09-14T14:15:57.000000Z","articles_count":0},{"id":20,"name":"Egypt Independent","slug":"egypt-independent","website_url":"https:\/\/egyptindependent.com","country_code":"EG","language":"en","bias":"center","type":"digital","reliability_score":71,"reliability_label":"medium","is_active":true,"fetch_interval_minutes":30,"last_fetched_at":"2026-09-14T14:16:01.000000Z","articles_count":20},{"id":21,"name":"\u0627\u0644\u0645\u0648\u0627\u0637\u0646 \u0633\u0639\u064a\u062f","slug":"almoatn-said","website_url":"https:\/\/www.youtube.com\/@almoatnsaid","country_code":"EG","language":"ar","bias":"center","type":"digital","reliability_score":60,"reliability_label":"medium","is_active":true,"fetch_interval_minutes":60,"last_fetched_at":"2026-09-14T14:16:02.000000Z","articles_count":0},{"id":22,"name":"\u0642\u0646\u0627\u0629 \u0633\u0627\u0645\u0631\u064a","slug":"samri","website_url":"https:\/\/www.youtube.com\/@samri","country_code":"EG","language":"ar","bias":"center","type":"digital","reliability_score":62,"reliability_label":"medium","is_active":true,"fetch_interval_minutes":60,"last_fetched_at":"2026-09-14T14:16:03.000000Z","articles_count":0},{"id":23,"name":"\u0645\u0635\u0637\u0641\u0649 \u0627\u0644\u0623\u0632\u0647\u0631\u064a","slug":"alazhari","website_url":"https:\/\/www.youtube.com\/@MostafaAlazhari","country_code":"EG","language":"ar","bias":"center","type":"digital","reliability_score":63,"reliability_label":"medium","is_active":true,"fetch_interval_minutes":60,"last_fetched_at":"2026-09-14T14:16:04.000000Z","articles_count":0},{"id":24,"name":"DW \u0639\u0631\u0628\u064a\u0629","slug":"dw-ar","website_url":"https:\/\/www.dw.com\/ar","country_code":"DE","language":"ar","bias":"center","type":"tv_channel","reliability_score":82,"reliability_label":"high","is_active":true,"fetch_interval_minutes":20,"last_fetched_at":"2026-09-19T12:35:25.000000Z","articles_count":0},{"id":25,"name":"Al Jazeera English YT","slug":"aljazeera-yt","website_url":"https:\/\/www.youtube.com\/@AlJazeeraEnglish","country_code":"QA","language":"en","bias":"center-left","type":"tv_channel","reliability_score":78,"reliability_label":"medium","is_active":true,"fetch_interval_minutes":30,"last_fetched_at":"2026-09-14T14:16:06.000000Z","articles_count":0},{"id":26,"name":"The Guardian","slug":"guardian","website_url":"https:\/\/www.theguardian.com","country_code":"GB","language":"en","bias":"center-left","type":"newspaper","reliability_score":83,"reliability_label":"high","is_active":true,"fetch_interval_minutes":20,"last_fetched_at":"2026-09-14T14:16:09.000000Z","articles_count":89},{"id":27,"name":"NPR News","slug":"npr","website_url":"https:\/\/www.npr.org","country_code":"US","language":"en","bias":"center-left","type":"digital","reliability_score":82,"reliability_label":"high","is_active":true,"fetch_interval_minutes":20,"last_fetched_at":"2026-09-14T14:16:10.000000Z","articles_count":20},{"id":28,"name":"\u0631\u0648\u0633\u064a\u0627 \u0627\u0644\u064a\u0648\u0645 \u0639\u0631\u0628\u064a","slug":"rt-ar","website_url":"https:\/\/arabic.rt.com","country_code":"RU","language":"ar","bias":"state","type":"tv_channel","reliability_score":45,"reliability_label":"low","is_active":true,"fetch_interval_minutes":30,"last_fetched_at":"2026-09-19T12:35:21.000000Z","articles_count":150},{"id":29,"name":"\u0633\u0643\u0627\u064a \u0646\u064a\u0648\u0632 \u0639\u0631\u0628\u064a\u0629","slug":"skynews-ar","website_url":"https:\/\/www.skynewsarabia.com","country_code":"AE","language":"ar","bias":"center-right","type":"tv_channel","reliability_score":72,"reliability_label":"medium","is_active":true,"fetch_interval_minutes":20,"last_fetched_at":"2026-09-14T14:16:15.000000Z","articles_count":50},{"id":30,"name":"RFI Fran\u00e7ais","slug":"rfi-fr","website_url":"https:\/\/www.rfi.fr","country_code":"FR","language":"fr","bias":"center","type":"tv_channel","reliability_score":80,"reliability_label":"high","is_active":true,"fetch_interval_minutes":20,"last_fetched_at":"2026-09-14T14:16:16.000000Z","articles_count":46},{"id":31,"name":"RT Espa\u00f1ol","slug":"rt-es","website_url":"https:\/\/actualidad.rt.com","country_code":"RU","language":"es","bias":"state","type":"tv_channel","reliability_score":45,"reliability_label":"low","is_active":true,"fetch_interval_minutes":30,"last_fetched_at":"2026-09-14T14:16:19.000000Z","articles_count":20},{"id":32,"name":"La Repubblica","slug":"repubblica","website_url":"https:\/\/www.repubblica.it","country_code":"IT","language":"it","bias":"center-left","type":"newspaper","reliability_score":80,"reliability_label":"high","is_active":true,"fetch_interval_minutes":30,"last_fetched_at":"2026-09-14T14:16:21.000000Z","articles_count":60},{"id":33,"name":"Summary - \u0633\u0645\u0631\u064a","slug":"summary-yt","website_url":"https:\/\/www.youtube.com\/@SummaryAR","country_code":"EG","language":"ar","bias":"center","type":"digital","reliability_score":65,"reliability_label":"medium","is_active":true,"fetch_interval_minutes":60,"last_fetched_at":"2026-09-14T14:16:22.000000Z","articles_count":0},{"id":34,"name":"\u0627\u0644\u0645\u0648\u0627\u0637\u0646 \u0633\u0639\u064a\u062f","slug":"almoatn-said-yt","website_url":"https:\/\/www.youtube.com\/@almoatnsaid","country_code":"EG","language":"ar","bias":"center","type":"digital","reliability_score":63,"reliability_label":"medium","is_active":true,"fetch_interval_minutes":60,"last_fetched_at":"2026-09-14T14:16:23.000000Z","articles_count":0},{"id":35,"name":"\u0627\u0644\u0642\u0627\u0647\u0631\u0629 \u0627\u0644\u0625\u062e\u0628\u0627\u0631\u064a\u0629","slug":"alqahera-news-yt","website_url":"https:\/\/www.youtube.com\/@AlQaheraNews","country_code":"EG","language":"ar","bias":"center","type":"tv_channel","reliability_score":68,"reliability_label":"medium","is_active":true,"fetch_interval_minutes":30,"last_fetched_at":"2026-09-14T14:16:23.000000Z","articles_count":0},{"id":36,"name":"\u0633\u0643\u0627\u064a \u0646\u064a\u0648\u0632 \u0639\u0631\u0628\u064a\u0629","slug":"skynews-ar-yt","website_url":"https:\/\/www.youtube.com\/@skynewsarabia","country_code":"AE","language":"ar","bias":"center-right","type":"tv_channel","reliability_score":72,"reliability_label":"medium","is_active":true,"fetch_interval_minutes":30,"last_fetched_at":"2026-09-14T14:16:24.000000Z","articles_count":0}],"meta":{"total":36}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '30'
+          x-ratelimit-remaining: '17'
+          access-control-allow-origin: 'http://localhost:8080'
+          access-control-expose-headers: 'X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/sources/{source_id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      source_id:
+        custom: []
+        name: source_id
+        description: 'The ID of the source.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      source_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"status":"ok","data":{"id":1,"name":"Reuters","slug":"reuters","website_url":"https:\/\/www.reuters.com","feed_url":"https:\/\/feeds.reuters.com\/reuters\/topNews","country_code":"GB","language":"en","bias":"center","type":"wire_agency","reliability_score":90,"reliability_label":"high","is_active":false,"fetch_interval_minutes":15,"last_fetched_at":"2026-09-05T17:30:33.000000Z","articles_count":0,"is_due_for_fetch":true}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '30'
+          x-ratelimit-remaining: '16'
+          access-control-allow-origin: 'http://localhost:8080'
+          access-control-expose-headers: 'X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/auth/logout
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/auth/me
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"status":"error","message":"Unauthenticated. Please provide a valid Bearer token."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: 'http://localhost:8080'
+          access-control-expose-headers: 'X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: api/v1/auth/password
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      current_password:
+        custom: []
+        name: current_password
+        description: ''
+        required: true
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'Must be at least 8 characters.'
+        required: true
+        example: '[2UZ5ij-e/dl4'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      current_password: consequatur
+      password: '[2UZ5ij-e/dl4'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/preferences/sources
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: "Return all sources with the authenticated user's preference for each."
+      description: 'Sources with no preference record default to enabled.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"status":"error","message":"Unauthenticated. Please provide a valid Bearer token."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: 'http://localhost:8080'
+          access-control-expose-headers: 'X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/v1/preferences/sources/{source_id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Toggle a single source on or off.'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      source_id:
+        custom: []
+        name: source_id
+        description: 'The ID of the source.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      source_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      is_enabled:
+        custom: []
+        name: is_enabled
+        description: ''
+        required: true
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      is_enabled: false
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: api/v1/preferences/sources
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Bulk update all source preferences at once.'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      sources:
+        custom: []
+        name: sources
+        description: ''
+        required: true
+        example:
+          - []
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'sources[].id':
+        custom: []
+        name: 'sources[].id'
+        description: 'Must match an existing stored value.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'sources[].enabled':
+        custom: []
+        name: 'sources[].enabled'
+        description: ''
+        required: true
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      sources:
+        -
+          id: 17
+          enabled: false
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: api/v1/preferences/sources
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Reset all preferences to enabled (default state).'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/sources/{source_id}/fetch'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      source_id:
+        custom: []
+        name: source_id
+        description: 'The ID of the source.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      source_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/articles/{article_id}/analyze'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      article_id:
+        custom: []
+        name: article_id
+        description: 'The ID of the article.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      article_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
