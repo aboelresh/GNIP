@@ -1,0 +1,14 @@
+# Global owner
+* @aboelresh
+
+# Backend core
+/app/Services/     @aboelresh
+/app/Models/       @aboelresh
+/database/         @aboelresh
+
+# API
+/app/Http/Controllers/Api/ @aboelresh
+/routes/api.php            @aboelresh
+
+# Tests
+/tests/            @aboelresh
