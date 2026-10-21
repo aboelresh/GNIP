@@ -14,6 +14,11 @@ Route::get('/stories/{story}', [StoryController::class,   'show']);
 Route::get('/briefings', [BriefingController::class, 'index']);
 Route::get('/briefings/{id}', [BriefingController::class, 'show']);
 Route::get('/search', [SearchController::class,  'index']);
+Route::post('/locale', function (Illuminate\Http\Request $request) {
+    $request->validate(['locale' => 'required|in:ar,en,fr']);
+    session(['locale' => $request->locale]);
+    return back();
+});
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
 Route::middleware('guest')->group(function () {
@@ -28,4 +33,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 // ─── Protected ────────────────────────────────────────────────────────────────
 Route::middleware('auth')->group(function () {
     Route::get('/preferences/sources', [PreferencesController::class, 'index']);
+    Route::put('/preferences/sources/{source}', [PreferencesController::class, 'toggle']);
+    Route::delete('/preferences/sources', [PreferencesController::class, 'reset']);
 });
