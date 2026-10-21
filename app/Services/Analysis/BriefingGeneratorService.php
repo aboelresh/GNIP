@@ -15,6 +15,25 @@ class BriefingGeneratorService
     ) {
     }
 
+        private function normalizeLocaleMap(mixed $value, string $fallback = 'en'): array
+    {
+        $langs = ['en', 'ar', 'fr', 'it', 'es'];
+
+        if (is_string($value)) {
+            return array_fill_keys($langs, $value);
+        }
+
+        if (is_array($value)) {
+            $base = $value[$fallback] ?? $value['en'] ?? null;
+            return array_merge(
+                array_fill_keys($langs, $base),
+                array_intersect_key($value, array_flip($langs))
+            );
+        }
+
+        return array_fill_keys($langs, null);
+    }
+
     public function generateDaily(): ?Briefing
     {
         $start = now()->subDay()->startOfDay();
